@@ -1,0 +1,678 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.7": {
+      "EntityFramework/6.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Data.DataSetExtensions",
+          "System.Drawing",
+          "System.IdentityModel",
+          "System.Net.Http",
+          "System.Windows.Forms",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Renci.SshNet.Async/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "SSH.NET": "2016.1.0"
+        },
+        "compile": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        }
+      },
+      "SSH.NET/2016.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Renci.SshNet.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.dll": {}
+        }
+      },
+      "Replicate.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "EntityFramework": "6.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Renci.SshNet.Async": "1.4.0",
+          "Replicate.TraceManager": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        }
+      },
+      "Replicate.TraceManager/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win": {
+      "EntityFramework/6.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Data.DataSetExtensions",
+          "System.Drawing",
+          "System.IdentityModel",
+          "System.Net.Http",
+          "System.Windows.Forms",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Renci.SshNet.Async/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "SSH.NET": "2016.1.0"
+        },
+        "compile": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        }
+      },
+      "SSH.NET/2016.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Renci.SshNet.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.dll": {}
+        }
+      },
+      "Replicate.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "EntityFramework": "6.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Renci.SshNet.Async": "1.4.0",
+          "Replicate.TraceManager": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        }
+      },
+      "Replicate.TraceManager/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win-x64": {
+      "EntityFramework/6.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Data.DataSetExtensions",
+          "System.Drawing",
+          "System.IdentityModel",
+          "System.Net.Http",
+          "System.Windows.Forms",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Renci.SshNet.Async/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "SSH.NET": "2016.1.0"
+        },
+        "compile": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        }
+      },
+      "SSH.NET/2016.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Renci.SshNet.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.dll": {}
+        }
+      },
+      "Replicate.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "EntityFramework": "6.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Renci.SshNet.Async": "1.4.0",
+          "Replicate.TraceManager": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        }
+      },
+      "Replicate.TraceManager/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.7/win-x86": {
+      "EntityFramework/6.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.ComponentModel.DataAnnotations"
+        ],
+        "compile": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        },
+        "runtime": {
+          "lib/net45/EntityFramework.SqlServer.dll": {},
+          "lib/net45/EntityFramework.dll": {}
+        }
+      },
+      "log4net/2.0.8": {
+        "type": "package",
+        "compile": {
+          "lib/net45-full/log4net.dll": {}
+        },
+        "runtime": {
+          "lib/net45-full/log4net.dll": {}
+        }
+      },
+      "Microsoft.IdentityModel.Clients.ActiveDirectory/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Data.DataSetExtensions",
+          "System.Drawing",
+          "System.IdentityModel",
+          "System.Net.Http",
+          "System.Windows.Forms",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll": {}
+        }
+      },
+      "Newtonsoft.Json/11.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Renci.SshNet.Async/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "SSH.NET": "2016.1.0"
+        },
+        "compile": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.Async.dll": {}
+        }
+      },
+      "SSH.NET/2016.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Renci.SshNet.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Renci.SshNet.dll": {}
+        }
+      },
+      "Replicate.Business/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "EntityFramework": "6.2.0",
+          "Newtonsoft.Json": "11.0.2",
+          "Renci.SshNet.Async": "1.4.0",
+          "Replicate.TraceManager": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.Business.dll": {}
+        }
+      },
+      "Replicate.TraceManager/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.7",
+        "dependencies": {
+          "log4net": "2.0.8"
+        },
+        "compile": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Replicate.TraceManager.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EntityFramework/6.2.0": {
+      "sha512": "ptGyXOf26qLrtn+2doAmylIlCxOnBJANwlyyLrXDmqIk9O18IzLWHyxDwwAyhgXkxmbiaA0WNpRy67WRReInBw==",
+      "type": "package",
+      "path": "entityframework/6.2.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/net40/App.config.transform",
+        "content/net40/Web.config.transform",
+        "entityframework.6.2.0.nupkg.sha512",
+        "entityframework.nuspec",
+        "lib/net40/EntityFramework.SqlServer.dll",
+        "lib/net40/EntityFramework.SqlServer.xml",
+        "lib/net40/EntityFramework.dll",
+        "lib/net40/EntityFramework.xml",
+        "lib/net45/EntityFramework.SqlServer.dll",
+        "lib/net45/EntityFramework.SqlServer.xml",
+        "lib/net45/EntityFramework.dll",
+        "lib/net45/EntityFramework.xml",
+        "tools/EntityFramework.PowerShell.Utility.dll",
+        "tools/EntityFramework.PowerShell.dll",
+        "tools/EntityFramework.psd1",
+        "tools/EntityFramework.psm1",
+        "tools/about_EntityFramework.help.txt",
+        "tools/init.ps1",
+        "tools/install.ps1",
+        "tools/migrate.exe"
+      ]
+    },
+    "log4net/2.0.8": {
+      "sha512": "N41MQGHZImiCfn0cUuSBjZxrcNfIQCuCgQP0rpgB3J/NWponEh3lc1LxJEuIsPAR9Oc1jVvfkNNFCY1C5hf9LA==",
+      "type": "package",
+      "path": "log4net/2.0.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20-full/log4net.dll",
+        "lib/net20-full/log4net.xml",
+        "lib/net35-client/log4net.dll",
+        "lib/net35-client/log4net.xml",
+        "lib/net35-full/log4net.dll",
+        "lib/net35-full/log4net.xml",
+        "lib/net40-client/log4net.dll",
+        "lib/net40-client/log4net.xml",
+        "lib/net40-full/log4net.dll",
+        "lib/net40-full/log4net.xml",
+        "lib/net45-full/log4net.dll",
+        "lib/net45-full/log4net.xml",
+        "lib/netstandard1.3/log4net.dll",
+        "log4net.2.0.8.nupkg.sha512",
+        "log4net.nuspec"
+      ]
+    },
+    "Microsoft.IdentityModel.Clients.ActiveDirectory/4.3.0": {
+      "sha512": "IRXnTCHxwnpnGBHVnTWd8RBJk7nsBsNZVl8j20kh234bP+oBILkt+6Iw5vQg5Q+sZmALt3Oq6X3Kx7qY71XyVw==",
+      "type": "package",
+      "path": "microsoft.identitymodel.clients.activedirectory/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid81/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/monoandroid81/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "lib/netstandard1.1/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/netstandard1.1/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "lib/netstandard1.3/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/netstandard1.3/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "lib/uap10.0/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/uap10.0/Microsoft.IdentityModel.Clients.ActiveDirectory.pri",
+        "lib/uap10.0/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "lib/xamarinios10/Microsoft.IdentityModel.Clients.ActiveDirectory.dll",
+        "lib/xamarinios10/Microsoft.IdentityModel.Clients.ActiveDirectory.xml",
+        "microsoft.identitymodel.clients.activedirectory.4.3.0.nupkg.sha512",
+        "microsoft.identitymodel.clients.activedirectory.nuspec"
+      ]
+    },
+    "Newtonsoft.Json/11.0.2": {
+      "sha512": "IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
+      "type": "package",
+      "path": "newtonsoft.json/11.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.11.0.2.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    },
+    "Renci.SshNet.Async/1.4.0": {
+      "sha512": "wDuIHDvseM/SX0UR/sc30DcKXLIhqZRKjzBdI1mm6YiJSdb0V0kQXSiyAqzXtFkCrIxPRtpH7As5DKqbyWPsEw==",
+      "type": "package",
+      "path": "renci.sshnet.async/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/Renci.SshNet.Async.dll",
+        "lib/net40/Renci.SshNet.Async.xml",
+        "lib/netstandard1.3/Renci.SshNet.Async.dll",
+        "lib/netstandard1.3/Renci.SshNet.Async.xml",
+        "lib/uap10.0/Renci.SshNet.Async.dll",
+        "lib/uap10.0/Renci.SshNet.Async.pri",
+        "lib/uap10.0/Renci.SshNet.Async.xml",
+        "renci.sshnet.async.1.4.0.nupkg.sha512",
+        "renci.sshnet.async.nuspec"
+      ]
+    },
+    "SSH.NET/2016.1.0": {
+      "sha512": "b0fcFFOE044KNRhq1uGujmK04ab+OzA9xARdeVCoZrY6I4D1IIaR6dn6qBIa+er4bJapGBhznDitwcRQpSRC0w==",
+      "type": "package",
+      "path": "ssh.net/2016.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/Renci.SshNet.dll",
+        "lib/net35/Renci.SshNet.xml",
+        "lib/net40/Renci.SshNet.dll",
+        "lib/net40/Renci.SshNet.xml",
+        "lib/netstandard1.3/Renci.SshNet.dll",
+        "lib/netstandard1.3/Renci.SshNet.xml",
+        "lib/sl4/Renci.SshNet.dll",
+        "lib/sl4/Renci.SshNet.xml",
+        "lib/sl5/Renci.SshNet.dll",
+        "lib/sl5/Renci.SshNet.xml",
+        "lib/uap10/Renci.SshNet.dll",
+        "lib/uap10/Renci.SshNet.xml",
+        "lib/wp71/Renci.SshNet.dll",
+        "lib/wp71/Renci.SshNet.xml",
+        "lib/wp8/Renci.SshNet.dll",
+        "lib/wp8/Renci.SshNet.xml",
+        "ssh.net.2016.1.0.nupkg.sha512",
+        "ssh.net.nuspec"
+      ]
+    },
+    "Replicate.Business/1.0.0": {
+      "type": "project",
+      "path": "../Replicate.Business/Replicate.Business.csproj",
+      "msbuildProject": "../Replicate.Business/Replicate.Business.csproj"
+    },
+    "Replicate.TraceManager/1.0.0": {
+      "type": "project",
+      "path": "../Replicate.TraceManager/Replicate.TraceManager.csproj",
+      "msbuildProject": "../Replicate.TraceManager/Replicate.TraceManager.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.7": [
+      "Microsoft.IdentityModel.Clients.ActiveDirectory >= 4.3.0",
+      "Newtonsoft.Json >= 11.0.2",
+      "Replicate.Business >= 1.0.0",
+      "Replicate.TraceManager >= 1.0.0",
+      "log4net >= 2.0.8"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\joaquin.bermudez\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.Service\\Replicate.Service.csproj",
+      "projectName": "Replicate.Service",
+      "projectPath": "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.Service\\Replicate.Service.csproj",
+      "packagesPath": "C:\\Users\\joaquin.bermudez\\.nuget\\packages\\",
+      "outputPath": "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.Service\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
+      "configFilePaths": [
+        "D:\\DirTrab\\AES\\MARS\\Dic\\NuGet.Config",
+        "C:\\Users\\joaquin.bermudez\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net47"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "D:\\DirTrab\\AES\\MARS\\Dic\\%BUILD_SOURCESDIRECTORY%\\NuGetPackages": {},
+        "D:\\DirTrab\\AES\\MARS\\Dic\\NuGetPackages": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net47": {
+          "projectReferences": {
+            "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.Business\\Replicate.Business.csproj": {
+              "projectPath": "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.Business\\Replicate.Business.csproj"
+            },
+            "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.TraceManager\\Replicate.TraceManager.csproj": {
+              "projectPath": "D:\\DirTrab\\AES\\MARS\\Dic\\Servicio\\Replicate\\Replicate.TraceManager\\Replicate.TraceManager.csproj"
+            }
+          }
+        }
+      }
+    },
+    "frameworks": {
+      "net47": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Clients.ActiveDirectory": {
+            "target": "Package",
+            "version": "[4.3.0, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[11.0.2, )"
+          },
+          "log4net": {
+            "target": "Package",
+            "version": "[2.0.8, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

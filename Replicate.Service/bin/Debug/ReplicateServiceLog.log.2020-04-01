@@ -1,0 +1,14 @@
+2020-04-01 12:07:29,635 INFO - Start Instance to fileHandler.
+2020-04-01 12:07:29,645 INFO - End Instance fileHandler.
+2020-04-01 12:08:33,545 INFO - Begin upload file: test-Caudales medios Diarios.txt.
+2020-04-01 12:08:36,207 INFO - End upload file: test-Caudales medios Diarios.txt.
+2020-04-01 12:08:46,593 INFO - Begin upload file: test-Caudales medios Diarios.txt.
+2020-04-01 12:08:48,111 INFO - End upload file: test-Caudales medios Diarios.txt.
+2020-04-01 12:09:01,626 INFO - Begin upload file: test-Precipitación Diaria.txt.
+2020-04-01 12:09:03,660 INFO - End upload file: test-Precipitación Diaria.txt.
+2020-04-01 12:09:13,057 INFO - Begin upload file: test-Precipitación Diaria.txt.
+2020-04-01 12:09:14,125 INFO - End upload file: test-Precipitación Diaria.txt.
+2020-04-01 12:09:29,217 INFO - Begin upload file: test-ModeloInfoHidroConsolidada.txt.
+2020-04-01 12:09:31,129 INFO - End upload file: test-ModeloInfoHidroConsolidada.txt.
+2020-04-01 12:09:40,085 INFO - Begin upload file: test-ModeloInfoHidroConsolidada.txt.
+2020-04-01 12:09:41,730 INFO - End upload file: test-ModeloInfoHidroConsolidada.txt.

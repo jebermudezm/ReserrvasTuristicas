@@ -1,0 +1,15 @@
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\bin\Debug\Replicate.TraceManager.dll
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\bin\Debug\Replicate.TraceManager.pdb
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\bin\Debug\log4net.dll
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.csproj.CoreCompileInputs.cache
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.csproj.CopyComplete
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.dll
+D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.pdb
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\bin\Debug\Replicate.TraceManager.dll
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\bin\Debug\Replicate.TraceManager.pdb
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\bin\Debug\log4net.dll
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.csprojAssemblyReference.cache
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.csproj.CoreCompileInputs.cache
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.csproj.CopyComplete
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.dll
+D:\DirTrab\AES\Replicate\Replicate.TraceManager\obj\Debug\Replicate.TraceManager.pdb

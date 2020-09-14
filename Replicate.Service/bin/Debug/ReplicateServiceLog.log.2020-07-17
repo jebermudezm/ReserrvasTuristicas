@@ -1,0 +1,8 @@
+2020-07-17 13:36:33,897 INFO - Start Instance to fileHandler.
+2020-07-17 13:36:33,905 INFO - End Instance fileHandler.
+2020-07-17 13:36:33,905 INFO - Begin Task.
+2020-07-17 13:43:08,547 INFO - Begin upload file: Diario río Batá Natural.XLS.
+2020-07-17 13:46:49,131 INFO - End upload file: Diario río Batá Natural.XLS.
+2020-07-17 13:46:49,141 INFO - Begin upload file: test-Caudales medios Diarios.txt.
+2020-07-17 13:46:49,518 INFO - End upload file: test-Caudales medios Diarios.txt.
+2020-07-17 13:46:49,604 INFO - End Task.

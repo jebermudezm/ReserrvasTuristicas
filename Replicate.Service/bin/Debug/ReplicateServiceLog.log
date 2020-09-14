@@ -1,0 +1,27 @@
+2020-08-24 20:44:19,690 INFO - Start Instance to fileHandler.
+2020-08-24 20:44:19,696 INFO - End Instance fileHandler.
+2020-08-24 20:44:19,696 INFO - Begin Task.
+2020-08-24 20:44:19,697 INFO - path file config.txt D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.Service\bin\Debug\Config.txt.
+2020-08-24 20:44:19,697 INFO - Begin Excecute.
+2020-08-24 20:44:43,476 INFO - Begin FileHandler.Excecute.
+2020-08-24 20:45:04,402 INFO - Begin FileHandler.ExcecuteLoadFile.
+2020-08-24 20:45:32,436 INFO - Begin FileHandler.ExcecuteLoadFile.
+2020-08-24 21:14:13,484 INFO - Start Instance to fileHandler.
+2020-08-24 21:14:13,490 INFO - End Instance fileHandler.
+2020-08-24 21:14:13,490 INFO - Begin Task.
+2020-08-24 21:14:13,490 INFO - path file config.txt D:\DirTrab\AES\MARS\Dic\Servicio\Replicate\Replicate.Service\bin\Debug\Config.txt.
+2020-08-24 21:14:13,491 INFO - Begin Excecute.
+2020-08-24 21:14:29,173 INFO - Begin FileHandler.Excecute.
+2020-08-24 21:14:29,196 INFO - Begin FileHandler.ExcecuteLoadFile.
+2020-08-24 21:16:37,762 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_may18_may24.pdf already exists in the FSTP
+2020-08-24 21:16:49,379 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_May11_May17.pdf already exists in the FSTP
+2020-08-24 21:16:53,736 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_May04_May10.pdf already exists in the FSTP
+2020-08-24 21:16:57,133 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jun29_jul05.pdf already exists in the FSTP
+2020-08-24 21:17:01,895 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jun22_jun28.pdf already exists in the FSTP
+2020-08-24 21:17:08,799 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jun15_jun21.pdf already exists in the FSTP
+2020-08-24 21:17:18,353 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jun08_jun14.pdf already exists in the FSTP
+2020-08-24 21:17:18,357 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jun01_jun07.pdf already exists in the FSTP
+2020-08-24 21:17:18,357 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jul27_ago02.pdf already exists in the FSTP
+2020-08-24 21:17:18,357 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jul20_jul26.pdf already exists in the FSTP
+2020-08-24 21:17:18,358 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jul13_jul19.pdf already exists in the FSTP
+2020-08-24 21:17:18,359 INFO - The file /BIDDING/COLOMBIA/DATAHUB/2020/CP_jul06_jul12.pdf already exists in the FSTP
