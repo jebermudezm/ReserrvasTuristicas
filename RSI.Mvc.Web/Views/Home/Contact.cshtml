@@ -1,0 +1,26 @@
+﻿<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+<address>
+    <strong>Support:</strong>   <a href="mitierraeventos@gmail.com">mitierraeventos@gmail.com</a><br />
+    @*<strong>Marketing:</strong> <a href="mitierraeventos@gmail.com">mitierraeventos@gmail.com</a>*@
+</address>
+
+@(Html.Kendo().Dialog()
+		.Name("dialog")
+		.Title("Software Update")
+		.Content("<p>A new version of <strong>Kendo UI</strong> is available. Would you like to download and install it now?<p>")
+		.Width(400)
+		.Modal(false)
+		.Actions(actions => {
+			actions.Add().Text("Skip this version");
+			actions.Add().Text("Remind me later");
+			actions.Add().Text("Install update").Primary(true);
+		})
+)

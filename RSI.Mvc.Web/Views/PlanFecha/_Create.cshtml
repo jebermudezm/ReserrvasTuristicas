@@ -1,0 +1,97 @@
+﻿@model RSI.Mvc.Web.ViewModel.PlanFechaViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h4 class="modal-title" style="display: inline-block;">Nuevo Plan Por Fecha</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        @using (Html.BeginForm("_Create", "PlanFecha", FormMethod.Post, new { id = "crearMaestroForm" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Codigo, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PlanId, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.DropDownList("PlanId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlanId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProveedorId, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.DropDownList("ProveedorId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProveedorId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FechaSalida, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @(Html.Kendo().DatePicker().Name("FechaSalida")//.Culture("es-ES")
+                                                        .Min(DateTime.Now.AddMonths(-2)).Max(DateTime.Now.AddYears(2))
+                                                        .HtmlAttributes(new { style = "width: 100%", title = "datepicker" }))
+                            @Html.ValidationMessageFor(model => model.FechaSalida, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FechaRegreso, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @(Html.Kendo().DatePicker().Name("FechaRegreso")//.Culture("es-ES")
+                                                        .Min(DateTime.Now.AddMonths(-2)).Max(DateTime.Now.AddYears(2))
+                                                        .HtmlAttributes(new { style = "width: 100%", title = "datepicker" }))
+                            @Html.ValidationMessageFor(model => model.FechaRegreso, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.TextAreaFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                    <br />
+                    <button type="button" onclick="ajaxPostCrearMaestro('@Url.Action("_Create", "PlanFecha")')" class="btn btn-success" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                    <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i>Cancelar</button>
+                    <br />
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

@@ -1,0 +1,156 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@using Kendo.Mvc.UI
+@model IncluyeViewModel
+
+<script>
+    function index(dataItem) {
+        var data = $("#DetalleIncluyeItems").data("kendoGrid").dataSource.data();
+
+        return data.indexOf(dataItem);
+    }
+    function agregarRegistro() {
+        var size = $("#DetalleIncluyeItems").data("kendoGrid").dataSource.view().length;
+        var data = $("#DetalleIncluyeItems").data("kendoGrid").columns;
+        var fields = {};
+        data.forEach(function (item) {
+            fields[item.field] = " ";
+        });
+        if (size <= 60) {
+            fields["Id"] = 0;
+            fields["IncluyeId"] = 0;
+            fields["Codigo"] = "";
+            fields["Descripcion"] = "";
+            $("#DetalleIncluyeItems").data("kendoGrid").dataSource.add(fields);
+        }
+    }
+    function resetRango() {
+        $("#DetalleIncluyeItems").data("kendoGrid").dataSource.data([]);
+        $("#DetalleIncluyeItems").data("kendoGrid").dataSource.read();
+    }
+    function onSave() {
+        $("#DetalleIncluyeItems").data("kendoGrid").refresh();
+    }
+
+    var rowIndex = null;
+    var cellIndex = null;
+    function onDataBinding(e) {
+        var current = e.sender.current() || [];
+        if (current[0]) {
+            cellIndex = current.index();
+            rowIndex = current.parent().index();
+        }
+    }
+    function onDataBound(e) {
+        if (!isNaN(cellIndex)) {
+            e.sender.current(e.sender.tbody.children().eq(rowIndex).children().eq(cellIndex));
+            rowIndex = cellIndex = null;
+        }
+    }
+</script>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h4 class="modal-title" style="display: inline-block;">Nuevo Delta Operación</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        <div class="modal-body">
+
+            <div id="mensajesModalLabel"></div>
+
+            @using (Html.BeginForm("_CreateDetalleIncludeGrid", "Plan", FormMethod.Post, new { id = "Form" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div id="DetalleIncludeInputGrid">
+                        @(Html.Kendo().Grid<DetalleIncluyeViewModel>(Model.DetalleIncluye)
+                                .Name("DetalleIncluyeItems")
+                                .HtmlAttributes(new { @class = "gridListaDetalleIncluye" })
+
+                                .Scrollable(s => s.Enabled(true).Height(450))
+                                .Navigatable()
+                                .Events(e =>
+                                {
+                                    e.DataBinding("onDataBinding");
+                                    e.Save("function(e){onSave();}");
+                                    e.DataBound("onDataBound");
+
+                                })
+                                .Columns(col =>
+                                {
+                                        //var format = "'0.\\#\\#\\#'";
+                                        var template = "EditorInputGrid/Integer0d";
+                                    col.Bound(c => c.Id).Hidden();
+                                    col.Bound(c => c.IncluyeId).Hidden();
+                                    col.Bound(c => c.Codigo).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                                    .ClientTemplate("#=Codigo#<input type='hidden' name='Incluye[#= index(data)#].Codigo' value='#=Codigo#'/>");
+                                    col.Bound(c => c.Descripcion).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                                    .ClientTemplate("#=Descripcion#<input type='hidden' name='Incluye[#= index(data)#].Descripcion' value='#=Descripcion#'/>");
+                                    col.Template(@<text></text>).Width(60).Title("")
+                                        .ClientTemplate(
+                                            @"<div style='display: flex; justify-content: space-around;'>" +
+                                            @"<button class='btn btn-circle btn-danger k-grid-delete' role='button'" +
+                                            @"      data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                                @"</div>"
+                                            );
+
+                        })
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Template(
+                        @<text>
+                            <button class='btn btn-success' id='btnAdd' style='float: left; margin: 10px 10px 10px 10px;' type='button'
+                                    onClick='agregarRegistro()' data-toggle='tooltip' data-placement='top' title='Agregar Delta'>
+                                <i class='fa fa-plus' aria-hidden='true'></i> Agregar
+                            </button>
+
+                            <div style="text-align: right">
+                                <button class='btn btn-danger' id='btnReset'
+                                        style='margin: 10px 10px 10px 10px;' type='button'
+                                        onClick='resetRango()' data-toggle='tooltip' data-placement='top' title='Resetear'>
+                                    Deshacer cambios
+                                </button>
+                            </div>
+
+                        </text>);
+                })
+                .Editable(editable =>
+                {
+                    editable.Mode(GridEditMode.InCell);
+                    editable.CreateAt(GridInsertRowPosition.Bottom);
+                    editable.DisplayDeleteConfirmation("¿Está seguro de esta acción?");
+                })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(25)
+                    .Sort(sort => sort.Add("Descripcion").Ascending())
+                    .Model(model =>
+                    {
+                        model.Id("IncluyeId");
+                        model.Field("Id", typeof(int)).Editable(false);
+                        model.Field("Codigo", typeof(string)).Editable(true);
+                        model.Field("Descripcion", typeof(string)).Editable(true);
+                    })
+
+                    .ServerOperation(false)
+                ))
+                        <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                            <br />
+                            <button type="button" onclick="ajaxPostCrearDetalle('@Url.Action("_CreateDetalleIncludeGrid", "Plan")')" value="Crear" class="btn btn-success" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                            <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true' onclick="onCancel"></i> Cancelar</button>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

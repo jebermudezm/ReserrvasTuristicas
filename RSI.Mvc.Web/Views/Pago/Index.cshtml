@@ -1,0 +1,146 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<PagoReservaViewModel>
+
+
+<style>
+    #gridDatosMaestro .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Pagos por reservas";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+        .Name("gridDatosMaestro")
+        .Events(events =>
+        {
+            events.DataBound("jsonCommun.resizeGrid");
+        })
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.Id).Visible(false);
+            columns.Bound(c => c.Reserva).Visible(true);
+            columns.Bound(c => c.ClienteId).Visible(false);
+            columns.Bound(c => c.NumeroDocumento).Visible(true);
+            columns.Bound(c => c.Nombre).Width(100).Visible(false);
+            columns.Bound(c => c.Fecha).Visible(true);
+            columns.Bound(c => c.Valor);
+            columns.Bound(c => c.ValorPagado).Visible(true);
+        })
+                .Pageable()
+                .Sortable()
+                .Resizable(resize => resize.Columns(true))
+                .Scrollable()
+        .ClientDetailTemplateId("templatePagos")
+        .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(15)
+            .ServerOperation(false)
+            .Read(read => read.Action("Index_Read", "Pago"))
+        )
+        .ToolBar(tb =>
+        {
+        tb.Template(
+@<text>
+    <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+</text>);
+    })
+    .Excel(excel => excel.FileName("Reservas.xlsx").AllPages(true))
+        .Filterable(ftb => ftb
+        .Extra(false)
+        .Operators(operators => operators
+            .ForString(str => str
+            .Clear()
+            .StartsWith("Comienza con...")
+            .Contains("Contiene...")
+            )
+            .ForEnums(enu => enu
+            .Clear()
+            .IsEqualTo("Es igual a...")
+            )
+       )
+   )
+)
+
+    <script id="templatePagos" type="text/kendo-tmpl">
+        @(Html.Kendo().Grid<PagosReservaViewModel>()
+                            .Name("GridPagos_#=Id#")
+                            .HtmlAttributes(new { @class = "GridPagos" })
+
+                            .Events(e =>
+                            {
+                            })
+                            .Columns(columns =>
+                            {
+                                columns.Bound(c => c.Id);
+                                columns.Bound(c => c.ReservaId);
+                                columns.Bound(c => c.Fecha);
+                                columns.Bound(c => c.Valor);
+                                columns.Bound(c => c.Saldo);
+                                columns.Bound(c => c.Observacion);
+                                columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                   .ClientTemplate(
+                                     @"<div style='display: flex; justify-content: space-between;'>" +
+                                           @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetReservaNewWindow("" " + Url.Action("_ReservaToPrint", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                           @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-print' aria-hidden='true'></i></button>" +
+                                       @"<div style='display: flex; justify-content: space-between;'>" +
+                                           @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Details", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                           @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+
+                                           @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Edit", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                           @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                           @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Delete", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                           @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                       @"</div>"
+                                 );
+                            })
+                            .Pageable(pageable => pageable
+                                .Refresh(true)
+                                .PageSizes(false)
+                                .ButtonCount(5))
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(10)
+                                .Sort(sort => sort.Add("Fecha").Ascending())
+                                .Read(read => read.Action("Read_Detalle", "Pago", new { reservaId = "#=Id#" }))
+                                .ServerOperation(false)
+                            )
+
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Template(
+                            @"<button class='btn btn-success' id='btnAdicionarPago'" +
+                                    @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                    @"onClick='jsonCommun.ajaxGet(""" + Url.Action("_Create", "Pago") + @"?reservaId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Nuevo'>" +
+                                @" <i class='fa fa-plus' aria-hidden='true'></i> Nuevo" +
+                            @"</button> <button class='btn btn-success' id='btnNuevo'" +
+                                    @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                    @"onClick='jsonCommun.ajaxGet(""" + Url.Action("_CreatePagoGrid", "Pago") + @"?reservaId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Pagos'>" +
+                                @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Pagos" +
+                            @"</button>"
+                            );
+                        })
+                        .ToClientTemplate())
+
+    </script>
+
+@section scripts {
+    <script src="~/Scripts/Pago.js"></script>
+}
+
+

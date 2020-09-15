@@ -1,0 +1,25 @@
+﻿@model RSI.Mvc.Web.Controllers.InfoTemplate
+<title id="myTitle">@Model.TitleAppWeb</title>
+<noscript>
+    <meta http-equiv="Refresh" content="2;url=http://RSI/">
+</noscript>
+<meta http-equiv="X-UA-Compatible" content="IE=11" />
+<meta charset="UTF-8" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="description" content="Mi Tierra Eventos Colombia, nueva tecnología integrada." />
+<meta name="keywords" content="Mi tierra Eventos" />
+<meta name="Generator" content="Mi Tierra" />
+
+<!-- ICONÓ -->
+<link href="/favicon.ico" rel="shortcut icon">
+
+<!-- HOJAS DE ESTILO -->
+@Styles.Render("~/KendoCss", "~/StylesApp")
+
+<!-- ARCHIVOS COMPLEMENTARIOS EN JAVASCRIPT -->
+@Scripts.Render("~/jquery")
+@Scripts.Render("~/KendoJava")
+@Scripts.Render("~/LibJava", "~/Bootstrap", "~/Apps")

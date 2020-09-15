@@ -1,0 +1,157 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model ReservaToPrintViewModel
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href='~/Content/Invoice.css' rel='stylesheet' />
+
+    <script>
+        function printdiv() {
+            divPrint.style.visibility = 'hidden';
+            window.print();
+        }
+    </script>
+</head>
+<body class="page-session page-sound page-header-fixed page-sidebar-fixed demo-dashboard-session">
+    <div class="container">
+        <div id="divPrint" class="page-header" style="text-align: center">
+            <br />
+            <button class='btn btn-success' id='btnImprimir' type='button' onClick="printdiv();"><i class='fa fa-print' aria-hidden='true'></i>Imprimir</button>
+        </div>
+        <div id="invoiceDiv" class="invoice-box">
+
+            <table cellpadding="0" cellspacing="0">
+                <tr class="item">
+                    <td>
+                        <img src="~/img/Logo.jpg" />
+                    </td>
+
+                    <td>
+
+                        <strong>A Nombre de:</strong> @Model.Cliente<br>
+                        <strong>Télefono Contacto:</strong> @Model.Cliente<br />
+                        <strong>Plan:</strong> @Model.Plan<br>
+                        <strong>Destino:</strong> @Model.Destino
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td>
+                        Acomodación: @Model.Acomodacion
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="details">
+                    <td>
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td> Pasajeros</td>
+                    <td>Detalle</td>
+                </tr>
+                <tr class="details">
+                    <td>
+                        @if (Model.ReservaIntegrantes != null)
+                        {
+                            foreach (var item in Model.ReservaIntegrantes)
+                            {
+                                <Text>
+                                @item.Cliente<br />
+                                </Text>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if (Model.Lista != null)
+                        {
+                            foreach (var item in Model.Lista.Where(x => x.tipo == "Detalle"))
+                            {
+                                <Text>
+                                    @item.Descripcion<br />
+                                </Text>
+
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td>
+                        EL PLAN INCLUYE
+                    </td>
+
+                    <td></td>
+                </tr>
+                <tr class="details">
+                    <td>
+                        @if (Model.Lista != null)
+                        {
+                            foreach (var item in Model.Lista.Where(x => x.tipo == "Incluye"))
+                            {
+                                <Text>
+                                <li>
+                                    @item.Descripcion
+                                </li>
+                                </Text>
+
+                            }
+                        }
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="heading">
+                    <td>
+                        EL PLAN NO INCLUYE
+                    </td>
+
+                    <td></td>
+                </tr>
+                <tr class="details">
+                    <td>
+                        @if (Model.ReservaIntegrantes != null)
+                        {
+                            foreach (var item in Model.Lista.Where(x => x.tipo == "NoIncluye"))
+                            {
+                                <Text>
+                                <li>
+                                    @item.Descripcion
+                                </li>
+                                </Text>
+                            }
+                        }
+                    </td>
+
+                    <td></td>
+                </tr>
+                <tr class="total">
+                    <td>
+                        Valor Por Persona: $@Model.ValorBruto
+                    </td>
+
+                    <td>
+                        Total: $@Model.ValorTotal
+                    </td>
+                </tr>
+                <tr class="top">
+                    <td colspan="1">
+                        <table>
+                            <tr class="heading">
+                                <td>
+                                    INFORMACIÓN GENERAL PARA RESERVAR EL PLAN
+                                </td>
+                            </tr>
+
+                            <tr class="item">
+                                <td>
+                                    El plan promocional genera pago inmediato<br />
+                                    ENVIAR SOPORTE DE PAGO CON COPIA AL WHATSAPP 314 884 48 90<br />
+                                    Cuenta de Ahorros Bancolombia N° 01422729557 a nombre de Mi Tierra o Jorge Edward Vargas.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

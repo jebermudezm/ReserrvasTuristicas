@@ -1,0 +1,53 @@
+﻿@Html.Action("Initialize", "Templates")
+<!DOCTYPE html>
+<html>
+<head>
+    @Html.Action("Head", "Templates")
+
+    @Styles.Render("~/Css")
+    @Scripts.Render("~/Propios")
+
+    <script type="text/javascript">
+			HomePageAppWeb = '@Url.Action("Index", "Home")';
+    </script>
+</head>
+<link href="~/Content/Lib/responsive.css" rel="stylesheet" />
+<script src="~/Scripts/Common.js"></script>
+<body class="page-session page-sound page-header-fixed page-sidebar-fixed demo-dashboard-session">
+    <section id="wrapper">
+        <header id="header">
+            @Html.Action("Header", "Templates")
+        </header>
+        <aside class="sidebar-circle sidebar-Sistema" id="sidebar-left">
+            @Html.Action("MainMenu", "Templates");
+        </aside>
+        <section id="page-content">
+            @RenderBody()
+        </section>
+    </section>
+    <div tabindex="-1" class="modal fade" id="modalRSI" role="dialog" aria-hidden="true"></div>
+    <div id="mensajesLabel" style="display: none; position: fixed; top: 8%; right: 25%; width: 50%; z-index: 99999999;"></div>
+    <a href="javascript:" id="return-to-top" style=""><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+    @RenderSection("scripts", required: false)
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() >= 50) {
+
+
+
+                $('#return-to-top').fadeIn(200);
+                $('#return-to-top').fadeOut(200);
+            }
+        });
+        $('#return-to-top').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+    </script>
+    @*<script src="https://cdn.cai.tools.sap/webchat/webchat.js"
+        channelId="116c5498-8729-4a06-b17d-be8b8753ea68"
+        token="efa5f7c19ae29e284e182f4999504050"
+        id="cai-webchat"></script>*@
+</body>
+</html>

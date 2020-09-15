@@ -1,0 +1,177 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@using Kendo.Mvc.UI
+@model PlanTuristicoViewModel
+
+<script>
+    function index(dataItem) {
+        var data = $("#DetallePlanTuristicoItems").data("kendoGrid").dataSource.data();
+
+        return data.indexOf(dataItem);
+    }
+    function agregarRegistro() {
+        var size = $("#DetallePlanTuristicoItems").data("kendoGrid").dataSource.view().length;
+        var data = $("#DetallePlanTuristicoItems").data("kendoGrid").columns;
+        var fields = {};
+        data.forEach(function (item) {
+            fields[item.field] = " ";
+        });
+        if (size <= 60) {
+            fields["Id"] = 0;
+            fields["PlanTuristicoId"] = 0;
+            fields["Codigo"] = "";
+            fields["Descripcion"] = "";
+            fields["CostoAdulto"] = "";
+            fields["CostoMenor"] = "";
+            fields["CostoInfante"] = "";
+            fields["ValorAdulto"] = "";
+            fields["ValorMenor"] = "";
+            fields["ValorInfante"] = "";
+            $("#DetallePlanTuristicoItems").data("kendoGrid").dataSource.add(fields);
+        }
+    }
+    function resetRango() {
+        $("#DetallePlanTuristicoItems").data("kendoGrid").dataSource.data([]);
+        $("#DetallePlanTuristicoItems").data("kendoGrid").dataSource.read();
+    }
+    function onSave() {
+        $("#DetallePlanTuristicoItems").data("kendoGrid").refresh();
+    }
+   
+    var rowIndex = null;
+    var cellIndex = null;
+    function onDataBinding(e) {
+        var current = e.sender.current() || [];
+        if (current[0]) {
+            cellIndex = current.index();
+            rowIndex = current.parent().index();
+        }
+    }
+    function onDataBound(e) {
+        if (!isNaN(cellIndex)) {
+            e.sender.current(e.sender.tbody.children().eq(rowIndex).children().eq(cellIndex));
+            rowIndex = cellIndex = null;
+        }
+    }
+</script>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h4 class="modal-title" style="display: inline-block;">Agregar Detalle Plan Turistico</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        <div class="modal-body">
+
+            <div id="mensajesModalLabel"></div>
+
+            @using (Html.BeginForm("_CreateDetallePlanTuristicoGrid", "PlanTuristico", FormMethod.Post, new { id = "Form" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div id="DetallePlanTuristicoGrid">
+                        @(Html.Kendo().Grid<DetallePlanTuristicoViewModel>(Model.DetailPlanTuristico)
+                        .Name("DetallePlanTuristicoItems")
+                        .HtmlAttributes(new { @class = "gridListaDetallePlanTuristico" })
+
+                        .Scrollable(s => s.Enabled(true).Height(450))
+                        .Navigatable()
+                        .Events(e =>
+                        {
+                            e.DataBinding("onDataBinding");
+                            e.Save("function(e){onSave();}");
+                            e.DataBound("onDataBound");
+
+                        })
+                        .Columns(col =>
+                        {
+                        var format = "'0.\\#\\#\\#'";
+                        var template = "EditorInputGrid/Integer0d";
+                        col.Bound(c => c.Id).Hidden();
+                        col.Bound(c => c.PlanTuristicoId).Hidden();
+                        col.Bound(c => c.Codigo).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                        .ClientTemplate("#=Codigo#<input type='hidden' name='Items[#= index(data)#].Codigo' value='#=Codigo#'/>");
+                        col.Bound(c => c.Descripcion).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                        .ClientTemplate("#=Descripcion#<input type='hidden' name='Items[#= index(data)#].Descripcion' value='#=Descripcion#'/>");
+                        col.Bound(c => c.CostoAdulto).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(CostoAdulto," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].CostoAdulto' value='#=kendo.toString(CostoAdulto," + format + ")#'/>");
+                        col.Bound(c => c.CostoMenor).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(CostoMenor," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].CostoMenor' value='#=kendo.toString(CostoMenor," + format + ")#'/>");
+                        col.Bound(c => c.CostoInfante).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(CostoInfante," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].CostoInfante' value='#=kendo.toString(CostoInfante," + format + ")#'/>");
+                        col.Bound(c => c.ValorAdulto).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(ValorAdulto," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].ValorAdulto' value='#=kendo.toString(ValorAdulto," + format + ")#'/>");
+                        col.Bound(c => c.ValorMenor).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(ValorMenor," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].ValorMenor' value='#=kendo.toString(ValorMenor," + format + ")#'/>");
+                        col.Bound(c => c.ValorInfante).EditorTemplateName(template).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                        .ClientTemplate("#=kendo.toString(ValorInfante," + format + ")#" + "<input type='hidden' name='Items[#= index(data)#].ValorInfante' value='#=kendo.toString(ValorInfante," + format + ")#'/>");
+
+                        col.Template(@<text></text>).Width(60).Title("")
+                                        .ClientTemplate(
+                                            @"<div style='display: flex; justify-content: space-around;'>" +
+                                            @"<button class='btn btn-circle btn-danger k-grid-delete' role='button'" +
+                                            @"      data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                                @"</div>"
+                                            );
+
+                })
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Template(
+                        @<text>
+                            <button class='btn btn-success' id='btnAdd' style='float: left; margin: 10px 10px 10px 10px;' type='button'
+                                    onClick='agregarRegistro()' data-toggle='tooltip' data-placement='top' title='Agregar Detalle Plan Turistico'>
+                                <i class='fa fa-plus' aria-hidden='true'></i> Agregar
+                            </button>
+
+                            <div style="text-align: right">
+                                <button class='btn btn-danger' id='btnReset'
+                                        style='margin: 10px 10px 10px 10px;' type='button'
+                                        onClick='resetRango()' data-toggle='tooltip' data-placement='top' title='Resetear'>
+                                    Deshacer cambios
+                                </button>
+                            </div>
+
+                        </text>);
+                })
+                        .Editable(editable =>
+                        {
+                            editable.Mode(GridEditMode.InCell);
+                            editable.CreateAt(GridInsertRowPosition.Bottom);
+                            editable.DisplayDeleteConfirmation("¿Está seguro de esta acción?");
+                        })
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(25)
+                            .Sort(sort => sort.Add("Descripcion").Ascending())
+                            .Model(model =>
+                            {
+                                model.Id("PlanTuristicoId");
+                                model.Field("Id", typeof(int)).Editable(false);
+                                model.Field("Codigo", typeof(string)).Editable(true);
+                                model.Field("Descripcion", typeof(string)).Editable(true);
+                                model.Field("Costo", typeof(double)).Editable(true);
+                                model.Field("Valor", typeof(double)).Editable(true);
+                            })
+
+                            .ServerOperation(false)
+                        ))
+                        <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                            <br />
+                            <button type="button" onclick="ajaxPostCrear('@Url.Action("_CreateDetallePlanTuristicoGrid", "PlanTuristico")')" value="Crear" class="btn btn-success" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                            <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true' onclick="onCancel"></i> Cancelar</button>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,112 @@
+﻿@using RSI.Mvc.Web.ViewModel;
+@model ProveedorViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h4 class="modal-title" style="display: inline-block;">Editar Proveedor</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            @using (Html.BeginForm("_Edit", "Proveedor", FormMethod.Post, new { id = "editarProveedorForm" }))
+            {
+                @*@Html.AntiForgeryToken()*@
+
+                <div class="modal-body">
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DocumentoIdentidadId, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.DropDownList("DocumentoIdentidadId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DocumentoIdentidadId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NumeroDocumentoIdentidad, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.NumeroDocumentoIdentidad, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.NumeroDocumentoIdentidad, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NombreORazonSocial, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.NombreORazonSocial, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.NombreORazonSocial, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Contacto, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.Contacto, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.Contacto, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-5" })
+                            <div class="col-md-7">
+                                @Html.TextAreaFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
+                                <div class="alert alert-default pull-right" style="font-weight: 300; margin: 0;"><span id="contador"></span></div>
+                                @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br />
+                    <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                        <br />
+                        <button type="button" onclick="ajaxPostEditarProveedor('@Url.Action("_Edit", "Proveedor")','editarProveedorForm')" class="btn btn-warning" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                        <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i> Cancelar</button>
+                        <br />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

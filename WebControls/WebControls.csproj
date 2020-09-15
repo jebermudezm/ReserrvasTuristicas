@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{FB5309E3-B649-471B-9A00-5861EEBE38D5}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>WebControls</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SharePoint.Client.Runtime.dll.15.0.4859.1000\lib\Microsoft.SharePoint.Client.Runtime\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.SharePoint.Client">
+      <HintPath>..\Dlls\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FrameWork.MenuControl\Item.cs" />
+    <Compile Include="FrameWork.MenuControl\ItemBase.cs" />
+    <Compile Include="FrameWork.MenuControl\ItemBilder.cs" />
+    <Compile Include="FrameWork.MenuControl\ItemBilderBase.cs" />
+    <Compile Include="FrameWork.MenuControl\Menu.cs" />
+    <Compile Include="FrameWork.MenuControl\MenuBar.cs" />
+    <Compile Include="FrameWork.MenuControl\MenuBarFactory.cs" />
+    <Compile Include="FrameWork.MenuControl\MenuItemBilder.cs" />
+    <Compile Include="FrameWork.MenuControl\MenuItemFactory.cs" />
+    <Compile Include="FrameWork.MenuControl\Separator.cs" />
+    <Compile Include="FrameWork.MenuControl\SeparatorBilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System.Web.Mvc\Cdn.cs" />
+    <Compile Include="System.Web.Mvc\Html5.cs" />
+    <Compile Include="System.Web.Mvc\SideBilder.cs" />
+    <Compile Include="WebControls.Files\Archiver.cs" />
+    <Compile Include="WebControls.Files\eFromServer.cs" />
+    <Compile Include="WebControls.Files\fFiler.cs" />
+    <Compile Include="WebControls.Files\Filer.cs" />
+    <Compile Include="WebControls.Files\IFiler.cs" />
+    <Compile Include="WebControls.Files\SPointer.cs" />
+    <Compile Include="WebControls.Mailing\BUIMail.cs" />
+    <Compile Include="WebControls.Mailing\EMail.cs" />
+    <Compile Include="WebControls.Mailing\Mail.cs" />
+    <Compile Include="WebControls.Mailing\MailFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

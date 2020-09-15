@@ -1,0 +1,12 @@
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\bin\Release\FrameworkNet.dll
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\bin\Release\FrameworkNet.pdb
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.csprojAssemblyReference.cache
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.csproj.CoreCompileInputs.cache
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.dll
+C:\Users\jebermudezm\source\repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.pdb
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\bin\Release\FrameworkNet.dll
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\bin\Release\FrameworkNet.pdb
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.csprojAssemblyReference.cache
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.csproj.CoreCompileInputs.cache
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.dll
+C:\Users\joaquin.bermudez\Source\Repos\ReservasTuristicas\FrameworkNet\obj\Release\FrameworkNet.pdb

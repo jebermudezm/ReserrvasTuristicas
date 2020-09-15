@@ -1,0 +1,13 @@
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\ConsolaOperaciones.Modelo.dll.config
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\ConsolaOperaciones.Modelo.dll
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\ConsolaOperaciones.Modelo.pdb
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\EntityFramework.dll
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\EntityFramework.SqlServer.dll
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\NCalc.dll
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\EntityFramework.xml
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\bin\Debug\EntityFramework.SqlServer.xml
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\obj\Debug\ConsolaOperaciones.Modelo.csproj.CoreCompileInputs.cache
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\obj\Debug\ConsolaOperaciones.Modelo.csproj.CopyComplete
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\obj\Debug\ConsolaOperaciones.Modelo.dll
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\obj\Debug\ConsolaOperaciones.Modelo.pdb
+D:\DirTrab\AES\ConsolaOperaciones\ConsolaOperaciones\ConsolaOperaciones.Modelo\obj\Debug\ConsolaOperaciones.Modelo.csprojAssemblyReference.cache

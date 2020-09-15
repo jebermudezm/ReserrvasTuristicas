@@ -1,0 +1,103 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model FacturaViewModel
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+        <div class="modal-header bg-info">
+            <h4 class="modal-title" style="display: inline-block;">Detalle Factura</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <br />
+        @using (Html.BeginForm())
+        {
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Prefijo, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Prefijo).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Numero, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Numero).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Fecha, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Fecha).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CedulaONit, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.CedulaONit).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Cliente, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Cliente).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorBruto, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorBruto).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorDescuento, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorDescuento).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorDescuento, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorDescuento).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorAntesImpuesto, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorAntesImpuesto).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorIVA, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorIVA).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ValorNeto, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.ValorNeto).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                    <br />
+                    <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i> Cerrar</button>
+                    <br />
+                </div>
+            </div>
+        }
+    </div>
+</div>

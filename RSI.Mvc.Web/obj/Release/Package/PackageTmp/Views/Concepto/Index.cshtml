@@ -1,0 +1,229 @@
+﻿@using RSI.Mvc.Web.ViewModel
+<style>
+    #gridDatosPlan .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Conceptos";
+}
+<script src="~/Scripts/Common.js"></script>
+<script>
+    
+function ajaxPostCrear(url) {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: $("#Form").serialize(),
+        dataType: 'json',
+        cache: false,
+        success: function (result, status, xhr) {
+            if (typeof result === 'undefined') {
+                $("#modalRSI").modal('toggle');
+                $("#modalRSI").html('');
+                var grids = document.querySelectorAll('[id^="gridConcepto"]');
+                for (var i = 0; i < grids.length; i++) {
+                    $("#" + grids[i].id).data("kendoGrid").dataSource.read();
+                }
+
+            }
+            else {
+                if (result.hasOwnProperty('Success')) {
+                    var alerta = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Error: </strong>'
+                        + result.ErrorMessage
+                        + '</div>';
+                    $("#mensajesModalLabel").html(alerta);
+                } else {
+                    $("#modalRSI").modal('toggle');
+                    $("#modalRSI").html('');
+                    var grids1 = document.querySelectorAll('[id^="gridConcepto"]');
+                    for (var j = 0; j < grids1.length; j++) {
+                        $("#" + grids1[j].id).data("kendoGrid").dataSource.read();
+                    }
+                }
+            }
+        },
+        error: function (xhr, status) {
+            var alerta = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Error: </strong>'
+                + xhr.statusText
+                + '</div>';
+            $("#mensajesModalLabel").html(alerta);
+        }
+    });
+}
+    function ajaxGetConcepto(url) {
+    $("#modalRSI").html("");
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function (result, status, xhr) {
+            if (result.hasOwnProperty('Success')) {
+                var alerta = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Error: </strong>'
+                    + result.ErrorMessage
+                    + '</div>';
+                $("#mensajesLabel").html(alerta).show();
+                window.setTimeout(function () {
+                    $("#mensajesLabel").fadeOut(500, function () {
+                        $("#mensajesLabel").hide('slow');
+                    });
+                }, 10000);
+            } else {
+                $("#modalRSI").html(result);
+                $("#modalRSI").modal('toggle');
+            }
+        },
+        error: function (xhr, status) {
+            var alerta = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><strong>Error: </strong>'
+                + xhr.statusText
+                + '</div>';
+            $("#mensajesModalLabel").html(alerta).show();
+            window.setTimeout(function () {
+                $("#mensajesModalLabel").fadeOut(500, function () {
+                    $("#mensajesModalLabel").hide('slow');
+                });
+            }, 10000);
+        }
+    });
+}
+</script>
+<br />
+@(Html.Kendo().Grid<ConceptoViewModel>()
+                            .Name("gridConcepto")
+                            .Events(events=> {
+                                events.DataBound("jsonCommun.resizeGrid");
+                            })
+                            
+                            //.Events(e => e.DataBound("jsonConfiguracion.onDataBound").Edit("onEdit").Save("onSaveConfiguracion").Cancel("jsonConfiguracion.onDataBound").DetailExpand("DetailExpand").DetailCollapse("DetailCollapse"))
+                            .Columns(columns =>
+                            {
+                                columns.Bound(p => p.Nombre);
+                                columns.Bound(p => p.Codigo);
+                                columns.Command(command =>
+                                {
+                                    command.Edit().Text(" ").UpdateText("Aceptar").CancelText("Cancelar").HtmlAttributes(new    { @class="btn-warning btn-circle-grid"});
+                                    command.Custom("deleteItem").Click("jsonCommun.confirmDelete").Text("<span class='k-icon k-i-close'></span>").HtmlAttributes(new { @class="btn-danger btn-circle-grid"});
+                                }).Width(140).Title("Opciones");
+                            }).Sortable()
+                                .Pageable(pageable =>
+                                {
+
+                                    pageable.Refresh(true);
+                                    pageable.PageSizes(true);
+                                    pageable.ButtonCount(5);
+                                }
+                                )
+                                    .ToolBar(tb =>
+                                    {
+                                        tb.Create().Text("Adicionar").HtmlAttributes(new { @class = "btn btn-success" });
+                                        tb.Excel().Text("Exportar a Excel").HtmlAttributes(new { @style = "background: RGB(33, 115, 70); padding: 5px 15px; color: white;" });
+                                    })
+                                    .Excel(excel => excel
+                                    .AllPages(true)
+                                    .FileName("Concepto.xlsx")
+                                    .Filterable(true)
+                                    .ProxyURL(Url.Action("Export_Save", "Concepto"))
+                                    )
+                                    .Pdf(pdf => pdf
+                                    .AllPages()
+                                    .FileName("Concepto.pdf")
+                                    )
+                                    .Editable(ed =>
+                                    {
+                                        ed.Mode(GridEditMode.PopUp);
+                                        ed.TemplateName("popup_editor_concepto");
+                                        ed.Window(w => w.Title("Crear/Editar concepto"));
+
+                                    })
+                                     .Pageable()
+                                    .Sortable()
+                                    .Resizable(resize => resize.Columns(true))
+                                    .Scrollable()
+                                     .ClientDetailTemplateId("template")
+                                     .NoRecords(x => x.Template("<div class='empty-grid'></div>"))
+                                    .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    //.Events(p => p.RequestEnd("onRequestEnd").RequestStart("onRequestStart"))
+                                    .Batch(false)
+                                    .ServerOperation(false)
+                                    .PageSize(50)
+
+                                    .Events(p => p.Error("jsonCommun.errorEx"))
+                                    .Model(model =>
+                                    {
+                                        model.Id(p => p.Id);
+                                    })
+                        .Create(create => create.Action("Crear", "Concepto"))
+                        .Read(read => read.Action("Consultar", "Concepto"))
+                        .Update(update => update.Action("Actualizar", "Concepto"))
+                        .Destroy(destroy => destroy.Action("Eliminar", "Concepto"))
+                        )
+                .Filterable(ftb => ftb
+                .Extra(false)
+                .Operators(operators => operators
+                    .ForString(str => str
+                    .Clear()
+                    .StartsWith("Comienza con...")
+                    .Contains("Contiene...")
+                    )
+                    .ForEnums(enu => enu
+                    .Clear()
+                    .IsEqualTo("Es igual a...")
+                    )
+                )
+                )
+)
+<script id="template" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<ConceptoValorViewModel>()
+            .Name("grid_" + "#=Id#")
+            // .Events(events => events.Edit("jsonGrid.editarPopup"))
+            .Columns(columns =>
+            {
+
+
+                columns.Bound(o => o.Valor);
+                columns.Bound(o => o.Observacion);
+                //columns.Command(command =>
+                //{
+                //    command.Custom("detailDelete").Click("jsonCommun.confirmDelete").Text("<span class='k-icon k-i-close'></span>").HtmlAttributes(new { @class = "btn-danger btn-circle-grid" });
+                //}).Width(80).Title("Acciones");
+
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(5)
+                .Events(events => events.Error("jsonCommun.errorEx"))
+                .Model(model =>
+                {
+                    model.Id(p => p.Id);
+                })
+                // .Create(create => create.Action("CrearDetalle", "Concepto", new { Concepto_Id = "#=Id#" }))
+                .Read(read => read.Action("ConsultarDetalle", "Concepto", new { ConceptoId = "#=Id#" }))
+            //.Destroy(destroy => destroy.Action("EliminarDetalle", "Concepto"))
+            )
+
+                .ToolBar(toolbar =>
+                {
+                    toolbar.Template(
+                        @"<button class='btn btn-success' id='btnNuevoConceptoValor'" +
+                                @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                @"onClick='jsonCommun.ajaxGet(""" + Url.Action("_CreateValorGrid", "Concepto") + @"?ConceptoId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Detalles del concepto'>" +
+                            @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalles del concepto" +
+                        @"</button>"
+                        );
+                })
+                    .ToClientTemplate())
+</script>
+<script type="text/kendo-template" id="message">
+    <div class="k-widget k-tooltip k-tooltip-validation k-invalid-msg field-validation-error" style="margin: 0.5em;display: block;position:relative;" data-for="#=field#" data-valmsg-for="#=field#" id="#=field#_validationMessage">
+        <span class="k-icon k-warning"> </span>#=message#<div class="k-callout k-callout-n">
+        </div>
+    </div>
+</script>
+    

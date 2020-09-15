@@ -1,0 +1,184 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<PlanTuristicoViewModel>
+
+
+<style>
+    #gridDatosPlanTuristico .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Planes Turisticos";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+                          .Name("gridDatosPlanTuristico")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(c => c.Id).Visible(true);
+                              columns.Bound(c => c.Codigo).Visible(true);
+                              columns.Bound(c => c.Descripcion).Visible(true);
+                              columns.Bound(c => c.Destino).Visible(true);
+                              columns.Bound(c => c.Hotel).Visible(true);
+                              columns.Bound(c => c.FechaSalida).Visible(true);
+                              columns.Bound(c => c.FechaRegreso).Visible(true);
+                              columns.Bound(c => c.CostoAdulto).Visible(true);
+                              columns.Bound(c => c.CostoMenor).Visible(true);
+                              columns.Bound(c => c.CostoInfante).Visible(true);
+                              columns.Bound(c => c.ValorAdulto).Visible(true);
+                              columns.Bound(c => c.ValorMenor).Visible(true);
+                              columns.Bound(c => c.ValorInfante).Visible(true);
+                              columns.Bound(c => c.Observacion);
+                              columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                .ClientTemplate(
+                                    @"<div style='display: flex; justify-content: space-between;'>" +
+                                        @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetPlanTuristico("" " + Url.Action("_Details", "PlanTuristico", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+
+                                        @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetPlanTuristico("" " + Url.Action("_Edit", "PlanTuristico", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                        @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetPlanTuristico("" " + Url.Action("_Delete", "PlanTuristico", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                    @"</div>"
+                              );
+                          })
+                          .Sortable()
+                          .Pageable(pageable => pageable
+                              .Refresh(true)
+                              .PageSizes(true)
+                              .ButtonCount(5))
+                          .ClientDetailTemplateId("templateDetallePlan")
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(15)
+                              .ServerOperation(false)
+                              .Read(read => read.Action("Index_Read", "PlanTuristico"))
+                          )
+                          .ToolBar(tb =>
+                          {
+                          tb.Template(
+    @<text>
+        <button class='btn btn-success' id='btnNuevoPlanTuristico' type='button' onclick="ajaxGetPlanTuristico('@Url.Action("_Create", "PlanTuristico")')"><i class='fa fa-plus' aria-hidden='true'></i>Adicionar</button>
+        <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+    </text>);
+    })
+            .Excel(excel => excel.FileName("PlanTuristicoes.xlsx").AllPages(true))
+            .Filterable(ftb => ftb
+            .Extra(false)
+            .Operators(operators => operators
+                .ForString(str => str
+                .Clear()
+                .StartsWith("Comienza con...")
+                .Contains("Contiene...")
+                )
+                .ForEnums(enu => enu
+                .Clear()
+                .IsEqualTo("Es igual a...")
+                )
+            )
+            )
+)
+        <script id="templateDetallePlan" type="text/kendo-tmpl">
+            @(Html.Kendo().Grid<DetallePlanTuristicoViewModel>()
+                        .Name("Griddetalle_#=Id#")
+                        .HtmlAttributes(new { @class = "gridDetallePlanTuristico" })
+
+                        .Events(e =>
+                        {
+                        })
+                        .Columns(columns =>
+                        {
+                            columns.Bound(c => c.Id);
+                            columns.Bound(c => c.Codigo);
+                            columns.Bound(c => c.Descripcion);
+                            columns.Bound(c => c.CostoAdulto);
+                            columns.Bound(c => c.CostoMenor);
+                            columns.Bound(c => c.CostoInfante);
+                            columns.Bound(c => c.ValorAdulto);
+                            columns.Bound(c => c.ValorMenor);
+                            columns.Bound(c => c.ValorInfante);
+                        })
+                        .Pageable(pageable => pageable
+                            .Refresh(true)
+                            .PageSizes(false)
+                            .ButtonCount(5))
+                        .ClientDetailTemplateId("templateItemDetalle")
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(10)
+                            .Sort(sort => sort.Add("Codigo").Ascending())
+                            .Read(read => read.Action("Read_DetallePlanTuristico", "PlanTuristico", new { planTuristicoId = "#=Id#"}))
+                            .ServerOperation(false)
+                        )
+
+                    .ToolBar(toolbar =>
+                    {
+                    toolbar.Template(
+                        @"<button class='btn btn-success' id='btnNuevoPlanTuristico'" +
+                                @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                @"onClick='ajaxGetPlanTuristico(""" + Url.Action("_CreateDetallePlanTuristicoGrid", "PlanTuristico") + @"?PlanTuristicoId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Detalles del PlanTuristico'>" +
+                            @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalles del PlanTuristico" +
+                        @"</button>"
+                        );
+                    })
+                    .ToClientTemplate())
+        </script>
+        <script id="templateItemDetalle" type="text/kendo-tmpl">
+            @(Html.Kendo().Grid<ItemDetallePlanTuristicoViewModel>()
+                        .Name("GridItemDetallePlanTuristico_#=Id#")
+                        .HtmlAttributes(new { @class = "GridDetallePlan" })
+
+                        .Events(e =>
+                        {
+                        })
+                        .Columns(col =>
+                        {
+                            col.Bound(c => c.Id);
+                            col.Bound(c => c.Codigo);
+                            col.Bound(c => c.Descripcion);
+                            col.Bound(c => c.CostoAdulto);
+                            col.Bound(c => c.CostoMenor);
+                            col.Bound(c => c.CostoInfante);
+                            col.Bound(c => c.ValorAdulto);
+                            col.Bound(c => c.ValorMenor);
+                            col.Bound(c => c.ValorInfante);
+                        })
+                        .Pageable(pageable => pageable
+                            .Refresh(true)
+                            .PageSizes(false)
+                            .ButtonCount(5))
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(10)
+                            .Sort(sort => sort.Add("Descripcion").Ascending())
+                            .Read(read => read.Action("Read_ItemDetallePlanTuristico", "PlanTuristico", new { detallePlanTuristicoId = "#=Id#" }))
+                            .ServerOperation(false)
+                        )
+
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(
+                        @"<button class='btn btn-success' id='btnAddItemDetallePlanTuristico'" +
+                                @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                @"onClick='ajaxGetPlanTuristico(""" + Url.Action("_CreateItemDetallePlanTuristicoGrid", "PlanTuristico") + @"?detallePlanTuristicoId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Detalle Item'>" +
+                            @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalle Item" +
+                        @"</button>"
+                        );
+                    })
+                    .ToClientTemplate())
+        </script>
+@section scripts {
+    <script src="~/Scripts/PlanTuristico.js"></script>
+}

@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E84D624E-C3C8-4BC8-B881-AF97689E2576}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>RSI.Desk</RootNamespace>
+    <AssemblyName>RSI.Desk</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Incluye.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Incluye.Designer.cs">
+      <DependentUpon>Incluye.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestItestSharp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestItestSharp.Designer.cs">
+      <DependentUpon>TestItestSharp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroConvenio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroConvenio.Designer.cs">
+      <DependentUpon>MaestroConvenio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroPlanTuristico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroPlanTuristico.Designer.cs">
+      <DependentUpon>MaestroPlanTuristico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroPlanBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroPlanBase.Designer.cs">
+      <DependentUpon>MaestroPlanBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroDestino.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroDestino.Designer.cs">
+      <DependentUpon>MaestroDestino.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroProveedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroProveedor.Designer.cs">
+      <DependentUpon>MaestroProveedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaestroClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaestroClientes.Designer.cs">
+      <DependentUpon>MaestroClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generales.cs" />
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MDIMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MDIMain.Designer.cs">
+      <DependentUpon>MDIMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Incluye.resx">
+      <DependentUpon>Incluye.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestItestSharp.resx">
+      <DependentUpon>TestItestSharp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroConvenio.resx">
+      <DependentUpon>MaestroConvenio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroPlanTuristico.resx">
+      <DependentUpon>MaestroPlanTuristico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroPlanBase.resx">
+      <DependentUpon>MaestroPlanBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroDestino.resx">
+      <DependentUpon>MaestroDestino.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroProveedor.resx">
+      <DependentUpon>MaestroProveedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaestroClientes.resx">
+      <DependentUpon>MaestroClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MDIMain.resx">
+      <DependentUpon>MDIMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RSI.Modelo\RSI.Modelo.csproj">
+      <Project>{15C30BF8-DBF8-4BAC-8B08-6402EF57607E}</Project>
+      <Name>RSI.Modelo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RSI.Negocio\RSI.Negocio.csproj">
+      <Project>{1840fc3c-aa92-4403-9c9f-a27d130f04b1}</Project>
+      <Name>RSI.Negocio</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

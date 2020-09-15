@@ -1,0 +1,84 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<ConvenioViewModel>
+
+
+@*<style>
+    #gridDatosConvenio .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+</style>*@
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración Convenios";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+                  .Name("gridDatosConvenio")
+                  .Columns(columns =>
+                  {
+                      columns.Bound(c => c.Id).Visible(true);
+                      columns.Bound(c => c.Nombre).Visible(true);
+                      columns.Bound(c => c.Descuento).Visible(true);
+                      columns.Bound(c => c.CreadoPor).Visible(true);
+                      columns.Bound(c => c.FechaCreacion);
+                      columns.Bound(c => c.ModificadoPor).Visible(true);
+                      columns.Bound(c => c.FechaModificacion);
+                      columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                        .ClientTemplate(
+                            @"<div style='display: flex; justify-content: space-between;'>" +
+                                @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetConvenio("" " + Url.Action("_Details", "Convenio", new { id = "#=Id#" }) + @" "")'" +
+                                @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+
+                                @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetConvenio("" " + Url.Action("_Edit", "Convenio", new { id = "#=Id#" }) + @" "")'" +
+                                @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetConvenio("" " + Url.Action("_Delete", "Convenio", new { id = "#=Id#" }) + @" "")'" +
+                                @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                            @"</div>"
+                      );
+                  })
+                  .Sortable()
+                  .Pageable(pageable => pageable
+                      .Refresh(true)
+                      .PageSizes(true)
+                      .ButtonCount(5))
+                  .DataSource(dataSource => dataSource
+                      .Ajax()
+                      .PageSize(15)
+                      .ServerOperation(false)
+                      .Read(read => read.Action("Index_Read", "Convenio"))
+                  )
+                  .ToolBar(tb =>
+                  {
+                  tb.Template(
+    @<text>
+        <button class='btn btn-success' id='btnNuevoConvenio' type='button' onclick="ajaxGetConvenio('@Url.Action("_Create", "Convenio")')"><i class='fa fa-plus' aria-hidden='true'></i>Adicionar</button>
+        <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+    </text>);
+                  })
+                           .Excel(excel => excel.FileName("Convenios.xlsx").AllPages(true))
+                           .Filterable(ftb => ftb
+                           .Extra(false)
+                           .Operators(operators => operators
+                                .ForString(str => str
+                                .Clear()
+                                .StartsWith("Comienza con...")
+                                .Contains("Contiene...")
+                                )
+                                .ForEnums(enu => enu
+                                .Clear()
+                                .IsEqualTo("Es igual a...")
+                                )
+                            )
+                          )
+)
+
+@section scripts {
+    <script src="~/Scripts/Convenio.js"></script>
+}

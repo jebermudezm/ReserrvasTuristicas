@@ -1,0 +1,140 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<FacturaViewModel>
+
+<style>
+    #gridDatosMovimiento .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Facturas";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+                              .Name("gridDatosMovimiento")
+                              .Columns(columns =>
+                              {
+                                  columns.Bound(c => c.Id).Visible(true);
+                                  columns.Bound(c => c.Prefijo).Visible(false);
+                                  columns.Bound(c => c.Numero);
+                                  columns.Bound(c => c.Fecha).Visible(false);
+                                  columns.Bound(c => c.Cliente);
+                                  columns.Bound(c => c.Reserva).Visible(false);
+                                  columns.Bound(c => c.ValorBruto);
+                                  columns.Bound(c => c.ValorDescuento);
+                                  columns.Bound(c => c.ValorAntesImpuesto).Visible(false);
+                                  columns.Bound(c => c.ValorIVA);
+                                  columns.Bound(c => c.ValorNeto);
+                                  columns.Bound(c => c.CreadoPor).Visible(false);
+                                  columns.Bound(c => c.FechaCreacion).Visible(false);
+                                  columns.Bound(c => c.ModificadoPor).Visible(false);
+                                  columns.Bound(c => c.FechaModificacion).Visible(false);
+                                  columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                    .ClientTemplate(
+                                        @"<div style='display: flex; justify-content: space-between;'>" +
+                                            @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetMovimientos("" " + Url.Action("_Factura", "Factura", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-print' aria-hidden='true'></i></button>" +
+                                            
+                                            @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetMovimientos("" " + Url.Action("_Edit", "Factura", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                            @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetMovimientos("" " + Url.Action("_Delete", "Factura", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                        @"</div>"
+                                  );
+                              })
+                              .Sortable()
+                              .Pageable(pageable => pageable
+                                  .Refresh(true)
+                                  .PageSizes(true)
+                                  .ButtonCount(5))
+                              .ClientDetailTemplateId("templateDetalle")
+                              .DataSource(dataSource => dataSource
+                                  .Ajax()
+                                  .PageSize(15)
+                                  .ServerOperation(false)
+                                  .Read(read => read.Action("Index_Read", "Factura"))
+                              )
+                              .ToolBar(tb =>
+                              {
+                                  tb.Template(
+                @<text>
+                    <button class='btn btn-success' id='btnNuevo' type='button' onclick="ajaxGetMovimientos('@Url.Action("_Create", "Factura")')"><i class='fa fa-plus' aria-hidden='true'></i>Adicionar</button>
+                    <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+                </text>);
+                              })
+                .Excel(excel => excel.FileName("Factura.xlsx").AllPages(true))
+                .Filterable(ftb => ftb
+                .Extra(false)
+                .Operators(operators => operators
+                    .ForString(str => str
+                    .Clear()
+                    .StartsWith("Comienza con...")
+                    .Contains("Contiene...")
+                    )
+                    .ForEnums(enu => enu
+                    .Clear()
+                    .IsEqualTo("Es igual a...")
+                    )
+                )
+                )
+)
+<script id="templateDetalle" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<FacturaDetalleViewModel>()
+                                .Name("GridMovimientoDetalle_#=Id#")
+                                .HtmlAttributes(new { @class = "GridMovimientoDetalle" })
+
+                                .Events(e =>
+                                {
+                                })
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(c => c.Id);
+                                    columns.Bound(c => c.Item);
+                                    columns.Bound(c => c.Cantidad);
+                                    columns.Bound(c => c.Descripcion);
+                                    columns.Bound(c => c.ValorUnitario);
+                                    columns.Bound(c => c.ValorBruto);
+                                    columns.Bound(c => c.PorcentajeDescuento);
+                                    columns.Bound(c => c.ValorAntesImpuesto);
+                                    columns.Bound(c => c.PorcentajeIVA);
+                                    columns.Bound(c => c.ValorIVA);
+                                    columns.Bound(c => c.ValorNeto);
+                                })
+                                .Pageable(pageable => pageable
+                                    .Refresh(true)
+                                    .PageSizes(false)
+                                    .ButtonCount(5))
+                                .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .PageSize(10)
+                                    .Sort(sort => sort.Add("Item").Ascending())
+                                    .Read(read => read.Action("Read_MovimientoDetalle", "Factura", new { facturaId = "#=Id#" }))
+                                    .ServerOperation(true)
+                                )
+
+                            .ToolBar(toolbar =>
+                            {
+                                toolbar.Template(
+                            @<text>
+                                <button class='btn btn-info' id='btnNuevoMovimiento' type='button' onclick="ajaxGetMovimientos('@Url.Action("_AgregarItems", "Movimiento")/#=Id#')"><i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalles de la Factura</button>
+                                <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+                            </text>
+                           );
+                            })
+            .ToClientTemplate())
+</script>
+@section scripts {
+    <script src="~/Scripts/Movimientos.js"></script>
+}

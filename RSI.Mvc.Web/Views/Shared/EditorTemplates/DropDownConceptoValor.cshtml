@@ -1,0 +1,14 @@
+﻿@using Kendo.Mvc.UI
+    @model int?
+    @(Html.Kendo().DropDownListFor(m => m)
+            .AutoBind(true)
+            .OptionLabel("Seleccionar Acomodación")
+            .DataTextField("Valor")
+            .DataValueField("Id")
+
+            .DataSource(dataSource =>
+            {
+                dataSource.Read(read => read.Action("ObtenerAcomodacion", "PlanFecha"));
+            })
+    )
+    @Html.ValidationMessageFor(m => m)

@@ -1,0 +1,88 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model DateTime
+
+@{
+    ViewBag.Title = "Reporte de Planes Turisticos";
+    TempData["ModuleName"] = "Planes Turisticos";
+}
+<style>
+
+    #GridReporte .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+</style>
+
+<div class="row">
+    <div style="text-align: center">
+        @Html.Label("Fecha:")
+        @(Html.Kendo().DatePickerFor(model => Model)
+                                        .Name("fecha")
+                                        .Format("dd/MM/yyyy")
+                                        .Value(DateTime.UtcNow.AddHours(-5).Date)
+                                        .HtmlAttributes(new { style = "width: 20%", title = "Fecha", onkeydown = "return false;" })
+                                        .Events(e => e.Change("pickerOnChange")))
+
+    </div>
+    <div class="col-md-2">
+        <br />
+    </div>
+</div>
+
+<div class="row" style="overflow-x:auto">
+
+    <H3 align="center"> <strong>Planes Turisticos Disponibles a la fecha @Model.ToString("MMMM dd yyyy").ToUpper()</strong></H3>
+    @(Html.Kendo().Grid<ReportePlanTuristicoViewModel>()
+        .Name("GridReporte")
+        .Excel(excel => excel
+        .FileName("GridReporte.xlsx")
+        .AllPages(true)
+        .ProxyURL(Url.Action("Exportar_Exel", "HelperGetter"))
+        )
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                .ClientTemplate(
+                                    @"<div style='display: flex; justify-content: space-between;'>" +
+                                        @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetPlan("" " + Url.Action("_Details", "Plan", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+                                    @"</div>"
+                              ).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4 ;" });
+            columns.Bound(c => c.Id).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4 ;" });
+            columns.Bound(c => c.Codigo).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.Descripcion).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.FechaSalida).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.FechaRegreso).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.Hotel).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.Destino).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.Proveedor).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.ValorAdulto).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.ValorMenor).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            columns.Bound(c => c.ValorInfante).HeaderHtmlAttributes(new { style = "text-align: center; background-color: #c6e0b4;" });
+            
+        })
+        .ToolBar(tools => tools.Excel())
+        .Pageable(pageable => pageable
+        .Refresh(true)
+        .PageSizes(true)
+        .ButtonCount(5))
+        .Selectable(selectable => selectable
+        .Mode(GridSelectionMode.Multiple)
+        .Type(GridSelectionType.Cell))
+        .Navigatable()
+        .AllowCopy(true)
+            .DataSource(ds => ds
+                .Ajax()
+                    .PageSize(24)
+                    .Sort(sort => { sort.Add(c => c.Destino).Ascending(); })
+                    .ServerOperation(false)
+                    .Read(read => read.Action("Index_Read", "ReportePlanTuristico", new { fecha = Model }))
+        )
+        .Sortable()
+    )
+
+</div>
+
+<script src="~/Scripts/Reporte.js"></script>
+

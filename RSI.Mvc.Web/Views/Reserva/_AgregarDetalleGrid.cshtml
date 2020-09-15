@@ -1,0 +1,181 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@using Kendo.Mvc.UI
+@model ReservaViewModel
+
+<script>
+    function index(dataItem) {
+        var data = $("#AgregarDetalle").data("kendoGrid").dataSource.data();
+
+        return data.indexOf(dataItem);
+    }
+    function agregarRegistro() {
+        var size = $("#AgregarDetalle").data("kendoGrid").dataSource.view().length;
+        var data = $("#AgregarDetalle").data("kendoGrid").columns;
+        var fields = {};
+        data.forEach(function (item) {
+            fields[item.field] = " ";
+        });
+        if (size <= 60) {
+            fields["Id"] = 0;
+            fields["ReservaId"] = 0;
+            fields["Item"] = 0;            
+            fields["Descripcion"] = "";
+            fields["Cantidad"] = "";
+            fields["ValorUnitario"] = "";
+            fields["PorcentajeDescuento"] = "";
+            fields["ValorAntesImpuesto"] = "";
+            fields["ValorDescuento"] = "";
+            fields["ValorTotal"] = "";
+            fields["ValortotalBruto"] = "";
+            fields["PorcentajeImpuesto"] = "";
+            fields["ValorImpuesto"] = "";
+            $("#AgregarDetalle").data("kendoGrid").dataSource.add(fields);
+        }
+    }
+
+    function resetRango() {
+        $("#AgregarDetalle").data("kendoGrid").dataSource.data([]);
+        $("#AgregarDetalle").data("kendoGrid").dataSource.read();
+    }
+    function onSave() {
+        $("#AgregarDetalle").data("kendoGrid").refresh();
+    }
+
+    var rowIndex = null;
+    var cellIndex = null;
+    function onDataBinding(e) {
+        var current = e.sender.current() || [];
+        if (current[0]) {
+            cellIndex = current.index();
+            rowIndex = current.parent().index();
+        }
+    }
+    function onDataBound(e) {
+        if (!isNaN(cellIndex)) {
+            e.sender.current(e.sender.tbody.children().eq(rowIndex).children().eq(cellIndex));
+            rowIndex = cellIndex = null;
+        }
+    }
+</script>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h4 class="modal-title" style="display: inline-block;">Agregar Editar Detalle</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        <div class="modal-body">
+
+            <div id="mensajesModalLabel"></div>
+
+            @using (Html.BeginForm("_AgregarDetalleGrid", "Reserva", FormMethod.Post, new { id = "FormReservaDetalle" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div id="DetalleReservaGrid">
+                        @(Html.Kendo().Grid<ReservaDetalleViewModel>(Model.ReservaDetalle)
+                                .Name("AgregarDetalle")
+                                .HtmlAttributes(new { @class = "gridListaDetalle" })
+
+                                .Scrollable(s => s.Enabled(true).Height(450))
+                                .Navigatable()
+                                .Events(e =>
+                                {
+                                    e.DataBinding("onDataBinding");
+                                    e.Save("function(e){onSave();}");
+                                    e.DataBound("onDataBound");
+
+                                })
+                                .Columns(col =>
+                                {
+                                    //var format = "'0.\\#\\#\\#'";
+                                    //var template = "EditorInputGrid/Integer0d";
+                                    col.Bound(c => c.Id).Hidden();
+                                    col.Bound(c => c.ReservaId).Hidden();
+                                    col.Bound(c => c.Item).Hidden();
+                                    col.Bound(c => c.Descripcion).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" }).ClientTemplate("#=Descripcion#<input type='hidden' name='Item[#= index(data)#].Descripcion' value='#=Descripcion#'/>");
+                                    col.Bound(c => c.Cantidad).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" }).ClientTemplate("#=Cantidad#<input type='hidden' name='Item[#= index(data)#].Cantidad' value='#=Cantidad#'/>");
+                                    col.Bound(c => c.ValorUnitario).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" }).ClientTemplate("#=ValorUnitario#<input type='hidden' name='Item[#= index(data)#].ValorUnitario' value='#=ValorUnitario#'/>");
+                                    col.Bound(c => c.PorcentajeDescuento).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" }).ClientTemplate("#=PorcentajeDescuento#<input type='hidden' name='Item[#= index(data)#].PorcentajeDescuento' value='#=PorcentajeDescuento#'/>");
+                                    col.Bound(c => c.ValorAntesImpuesto).Hidden();
+                                    col.Bound(c => c.ValorDescuento).Hidden();
+                                    col.Bound(c => c.ValorTotal).Hidden();
+                                    col.Bound(c => c.ValortotalBruto).Hidden();
+                                    col.Bound(c => c.PorcentajeImpuesto).Hidden();
+                                    col.Bound(c => c.ValorImpuesto).Hidden();
+                                    col.Template(@<text></text>).Width(60).Title("")
+                                        .ClientTemplate(
+                                            @"<div style='display: flex; justify-content: space-around;'>" +
+                                            @"<button class='btn btn-circle btn-danger k-grid-delete' role='button'" +
+                                            @"      data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                                @"</div>"
+                                            );
+                        })
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Template(
+                        @<text>
+                            <button class='btn btn-success' id='btnAdd' style='float: left; margin: 10px 10px 10px 10px;' type='button'
+                                    onClick='agregarRegistro()' data-toggle='tooltip' data-placement='top' title='Agregar Detalle'>
+                                <i class='fa fa-plus' aria-hidden='true'></i> Agregar
+                            </button>
+
+                            <div style="text-align: right">
+                                <button class='btn btn-danger' id='btnReset'
+                                        style='margin: 10px 10px 10px 10px;' type='button'
+                                        onClick='resetRango()' data-toggle='tooltip' data-placement='top' title='Resetear'>
+                                    Deshacer cambios
+                                </button>
+                            </div>
+
+                        </text>);
+                })
+                .Editable(editable =>
+                {
+                    editable.Mode(GridEditMode.InCell);
+                    editable.CreateAt(GridInsertRowPosition.Bottom);
+                    editable.DisplayDeleteConfirmation("¿Está seguro de esta acción?");
+                })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(25)
+                    .Sort(sort => sort.Add("Item").Ascending())
+                    .Model(model =>
+                    {
+                        model.Field("Id", typeof(int)).Editable(false);
+                        model.Id("ReservaId");
+                        model.Field("ReservaId", typeof(int)).Editable(false);
+                        model.Field("Item", typeof(string)).Editable(true);
+                        model.Field("Descripcion", typeof(string)).Editable(true);
+                        model.Field("Cantidad", typeof(string)).Editable(true);
+                        model.Field("ValorUnitario", typeof(string)).Editable(true);
+                        model.Field("ValorDescuento", typeof(string)).Editable(true);
+                        model.Field("ValorAntesImpuesto", typeof(string)).Editable(false);
+                        model.Field("ValorDescuento", typeof(string)).Editable(false);
+                        model.Field("ValorTotal", typeof(string)).Editable(false);
+                        model.Field("PorcentajeImpuesto", typeof(string)).Editable(false);
+                        model.Field("ValorImpuesto", typeof(string)).Editable(false);
+                    })
+
+                    .ServerOperation(false)
+                ))
+                            <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                                <br />
+                                <button type="button" onclick="ajaxPostReservaDetalle1('@Url.Action("_AgregarDetalleGrid", "Reserva")')" value="Crear" class="btn btn-success" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                                <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true' onclick="onCancel"></i> Cancelar</button>
+                                <br />
+                            </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

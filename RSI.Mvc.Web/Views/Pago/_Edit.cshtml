@@ -1,0 +1,64 @@
+﻿@using RSI.Mvc.Web.ViewModel;
+@model PagosReservaViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-warning">
+            <h4 class="modal-title" style="display: inline-block;">Editar Pago</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        @using (Html.BeginForm("_Edit", "Pago", FormMethod.Post, new { id = "editarPagoForm" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+
+            <div class="modal-body">
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @(Html.Kendo().DatePicker().Name("Fecha")//.Culture("es-ES")
+                                                                                .Min(DateTime.Now.AddMonths(-2)).Max(DateTime.Now.AddYears(2))
+                                                                                .HtmlAttributes(new { style = "width: 100%", title = "datepicker" }))
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.TextAreaFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                    <br />
+                    <button type="button" onclick="ajaxPostEditarPago('@Url.Action("_Edit", "Pago")','editarPlanTuristicoForm')" class="btn btn-warning" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                    <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i> Cancelar</button>
+                    <br />
+                </div>
+            </div>
+        }
+    </div>
+</div>

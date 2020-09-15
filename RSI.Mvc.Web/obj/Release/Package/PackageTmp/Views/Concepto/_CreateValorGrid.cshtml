@@ -1,0 +1,154 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@using Kendo.Mvc.UI
+@model ConceptoViewModel
+
+<script>
+    function index(dataItem) {
+        var data = $("#ConceptoValorItems").data("kendoGrid").dataSource.data();
+
+        return data.indexOf(dataItem);
+    }
+    function agregarRegistro() {
+        var size = $("#ConceptoValorItems").data("kendoGrid").dataSource.view().length;
+        var data = $("#ConceptoValorItems").data("kendoGrid").columns;
+        var fields = {};
+        data.forEach(function (item) {
+            fields[item.field] = " ";
+        });
+        if (size <= 60) {
+            fields["Id"] = 0;
+            fields["ConceptoId"] = 0;
+            fields["Valor"] = "";
+            fields["Observacion"] = "";
+            $("#ConceptoValorItems").data("kendoGrid").dataSource.add(fields);
+        }
+    }
+    function resetRango() {
+        $("#ConceptoValorItems").data("kendoGrid").dataSource.data([]);
+        $("#ConceptoValorItems").data("kendoGrid").dataSource.read();
+    }
+    function onSave() {
+        $("#ConceptoValorItems").data("kendoGrid").refresh();
+    }
+   
+    var rowIndex = null;
+    var cellIndex = null;
+    function onDataBinding(e) {
+        var current = e.sender.current() || [];
+        if (current[0]) {
+            cellIndex = current.index();
+            rowIndex = current.parent().index();
+        }
+    }
+    function onDataBound(e) {
+        if (!isNaN(cellIndex)) {
+            e.sender.current(e.sender.tbody.children().eq(rowIndex).children().eq(cellIndex));
+            rowIndex = cellIndex = null;
+        }
+    }
+</script>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h4 class="modal-title" style="display: inline-block;">Nuevo Delta Operación</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <br />
+        <div class="modal-body">
+
+            <div id="mensajesModalLabel"></div>
+
+            @using (Html.BeginForm("_CreateValorGrid", "Concepto", FormMethod.Post, new { id = "Form" }))
+            {
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div id="IncludInputGrid">
+                        @(Html.Kendo().Grid<ConceptoValorViewModel>(Model.ConceptoValor)
+                        .Name("ConceptoValorItems")
+                        .HtmlAttributes(new { @class = "gridListaIncludes" })
+
+                        .Scrollable(s => s.Enabled(true).Height(450))
+                        .Navigatable()
+                        .Events(e =>
+                        {
+                            e.DataBinding("onDataBinding");
+                            e.Save("function(e){onSave();}");
+                            e.DataBound("onDataBound");
+
+                        })
+                        .Columns(col =>
+                        {
+                            col.Bound(c => c.Id).Hidden();
+                            col.Bound(c => c.ConceptoId).Hidden();
+                            col.Bound(c => c.Valor).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                            .ClientTemplate("#=Valor#<input type='hidden' name='ConceptoValor[#= index(data)#].Valor' value='#=Valor#'/>");
+                            col.Bound(c => c.Observacion).HeaderHtmlAttributes(new { style = "overflow: visible; white-space: normal" })
+                                            .ClientTemplate("#=Observacion#<input type='hidden' name='ConceptoValor[#= index(data)#].Observacion' value='#=Observacion#'/>");
+                            col.Template(@<text></text>).Width(60).Title("")
+                                        .ClientTemplate(
+                                            @"<div style='display: flex; justify-content: space-around;'>" +
+                                            @"<button class='btn btn-circle btn-danger k-grid-delete' role='button'" +
+                                            @"      data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                                @"</div>"
+                                            );
+
+                })
+                        .ToolBar(toolbar =>
+                        {
+                            toolbar.Template(
+                        @<text>
+                            <button class='btn btn-success' id='btnAdd' style='float: left; margin: 10px 10px 10px 10px;' type='button'
+                                    onClick='agregarRegistro()' data-toggle='tooltip' data-placement='top' title='Agregar Detalle concepto'>
+                                <i class='fa fa-plus' aria-hidden='true'></i> Agregar
+                            </button>
+
+                            <div style="text-align: right">
+                                <button class='btn btn-danger' id='btnReset'
+                                        style='margin: 10px 10px 10px 10px;' type='button'
+                                        onClick='resetRango()' data-toggle='tooltip' data-placement='top' title='Resetear'>
+                                    Deshacer cambios
+                                </button>
+                            </div>
+
+                        </text>);
+                })
+                        .Editable(editable =>
+                        {
+                            editable.Mode(GridEditMode.InCell);
+                            editable.CreateAt(GridInsertRowPosition.Bottom);
+                            editable.DisplayDeleteConfirmation("¿Está seguro de esta acción?");
+                        })
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(25)
+                              .Sort(sort => sort.Add("Observacion").Ascending())
+                             .Model(model =>
+                            {
+                                model.Id("ConceptoId");
+                                model.Field("Id", typeof(int)).Editable(false);
+                                model.Field("Valor", typeof(string)).Editable(true);
+                                model.Field("Observacion", typeof(string)).Editable(true);
+                            })
+
+                            .ServerOperation(false)
+                        ))
+                        <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                            <br />
+                            <button type="button" onclick="jsonCommun.ajaxPostCrear('@Url.Action("_CreateValorGrid", "Concepto")','grid_@Model.Id')" value="Crear" class="btn btn-success" style='margin: 10px 0 20px 0'><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                            <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true' onclick="onCancel"></i> Cancelar</button>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

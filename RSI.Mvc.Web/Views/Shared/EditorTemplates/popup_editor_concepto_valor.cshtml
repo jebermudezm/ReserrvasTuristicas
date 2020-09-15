@@ -1,0 +1,15 @@
+﻿@model RSI.Mvc.Web.ViewModel.ConceptoValorViewModel
+
+    <div class="container-edit">
+        <div class="form-group form-group-edit">
+            @Html.LabelFor(model => model.Valor)
+            @Html.TextBoxFor(m => m.Valor, new { @class = "form-control", @Placeholder = "Valor cadena" })
+            @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group form-group-edit">
+            @Html.LabelFor(model => model.Observacion)
+            @Html.TextAreaFor(m => m.Observacion,rows:6,columns:3, htmlAttributes:null)
+            @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+        </div>
+    </div>

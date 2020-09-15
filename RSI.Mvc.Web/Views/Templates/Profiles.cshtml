@@ -1,0 +1,90 @@
+﻿@model FrameworkNet.Rsi.Usuario
+
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-4">
+		<div class="panel rounded shadow">
+			<div class="panel-body">
+				<div class="inner-all">
+					<ul class="list-unstyled">
+						<li class="text-center">
+							<img height="150" width="135" class="img-circle img-bordered-primary" src="~/img/Logo.jpg">
+						</li>
+						<li class="text-center">
+							<h4 class="text-capitalize">@Model.usuario_nombre</h4>
+							<p class="text-muted text-capitalize">@Model.usuario_cargo</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-theme rounded shadow">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h3 class="panel-title">Cuentas</h3>
+				</div>
+				<div class="pull-right">
+					<a class="btn btn-sm btn-success" href="#"><i class="fa fa-facebook"></i></a>
+					<a class="btn btn-sm btn-success" href="#"><i class="fa fa-twitter"></i></a>
+					<a class="btn btn-sm btn-success" href="#"><i class="fa fa-google-plus"></i></a>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-body no-padding rounded">
+				<ul class="list-group no-margin">
+					<li class="list-group-item"><i class="fa fa-envelope mr-5"></i> @Model.usuario_mail.ToLower()</li>
+					<li class="list-group-item"><i class="fa fa-user mr-5"></i> @Model.usuario_ad_name</li>
+					<!--<li class="list-group-item"><i class="glyphicon glyphicon-globe mr-5"></i> GLOBAL\infoseek.gcarrizo</li>-->
+					<li class="list-group-item"><i class="glyphicon glyphicon-phone-alt mr-5"></i> @Model.tel_fijo </li>
+					<li class="list-group-item"><i class="glyphicon glyphicon-earphone mr-5"></i> @Model.tel_interno </li>
+					<li class="list-group-item"><i class="glyphicon glyphicon-phone mr-5"></i> @Model.tel_celular </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-9 col-md-9 col-sm-8">
+		<div class="profile-cover">
+			<div class="cover rounded shadow no-overflow">
+				<div class="inner-cover">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h3 class="panel-title">Datos Corporativos</h3></div>
+						<div class="panel-body">
+							<div class="col-sm-6">
+								<div class="form-inner-item-ok"><span class="label">Tipo y Nº Doc</span><span>@Model.leg_numdoc</span></div>
+								<div class="form-inner-item-ok"><span class="label">Empresa</span><span>@Model.usuario_empresa</span></div>
+								<div class="form-inner-item-ok"><span class="label">Sector</span><span>@Model.usuario_sector</span></div>
+								<div class="form-inner-item-ok"><span class="label">Cargo</span><span>@Model.usuario_cargo</span></div>
+								<div class="form-inner-item-ok"><span class="label">Jefe</span><span>@Model.NombreJefe</span></div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-inner-item-ok"><span class="label">Teléfono interno</span><span>@Model.tel_interno</span></div>
+								<div class="form-inner-item-ok"><span class="label">Celular</span><span>@Model.tel_celular</span></div>
+								<div class="form-inner-item-ok"><span class="label">Locacion</span><span>@Model.usuario_localidad</span></div>
+								<div class="form-inner-item-ok"><span class="label">Planta</span><span>@Model.usuario_lpg_disc</span></div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-success">
+						<div class="panel-heading"><h3 class="panel-title">Roles de Usuario</h3></div>
+						<div class="panel-body">
+							@foreach (var item in Model.Responsabilidades) {
+								<div class="row">
+									<div class="col-sm-4"><span class="btn btn-facebook btn-block">@item.Resp_Name</span></div>
+									<div class="col-sm-8">@MvcHtmlString.Create(item.Resp_Desc)</div>
+								</div>
+							}
+							<br />
+							<wbr />
+							@foreach (var item in Model.Grupos) {
+								<div class="row">
+									<div class="col-sm-4"><span class="btn btn-primary btn-block">@item.Group_Name</span></div>
+									<div class="col-sm-8">@MvcHtmlString.Create(item.Group_Desc)</div>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

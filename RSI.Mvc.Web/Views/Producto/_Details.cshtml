@@ -1,0 +1,80 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model ProductoViewModel
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+        <div class="modal-header bg-info">
+            <h4 class="modal-title" style="display: inline-block;">Detalle Cliente</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <br />
+        @using (Html.BeginForm())
+        {
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Proveedor, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Proveedor).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" }).Format("{0:d}")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Impuesto, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Impuesto).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" }).Format("{0:d}")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Codigo, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Codigo).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" }).Format("{0:d}")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nombre, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Nombre).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" }).Format("{0:d}")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Costo, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Costo).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Valor, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Valor).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Observacion, new { @class = "control-label col-md-5" })
+                        <div class="col-md-7">
+                            @Html.Kendo().TextBoxFor(m => m.Observacion).HtmlAttributes(new { style = "width:100%", @disabled = "disabled" }).Format("{0:d}")
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                    <br />
+                    <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i> Cerrar</button>
+                    <br />
+                </div>
+            </div>
+        }
+    </div>
+</div>

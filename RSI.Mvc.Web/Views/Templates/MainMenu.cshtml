@@ -1,0 +1,29 @@
+﻿@using FrameWork.MenuControl
+@using RSI.Mvc.Web.Controllers
+@model List<ItemBase>
+
+@{
+	InfoTemplate Info = Session["InfoTemplate"] as InfoTemplate;
+}
+
+@(
+	Html5.SideBar
+	.Id("sidebar-left")
+	.Class("sidebar-circle sidebar-Sistema")
+	.Header(new { @class = "sidebar-content" },@<text>
+		<div class="media">
+			<a class="pull-left has-notif avatar" href="javascript:void()">
+				<img class="avatar" src="~/img/Logo.jpg">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading media-heading-user">@Info.UserFullName</h4>
+				<small><i id="IconUserProfile"></i> @Info.UserCharge</small>
+			</div>
+		</div>
+	</text>)
+	.ListItems(Model)
+	.Body(new { @class = "sidebar-menu", tabindex = "0" })
+	.Draw()
+)
+
+

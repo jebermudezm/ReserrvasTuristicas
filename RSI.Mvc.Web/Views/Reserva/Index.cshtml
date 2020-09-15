@@ -1,0 +1,190 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<ReservaViewModel>
+
+@*function myFunction() {
+    window.print();
+}*@
+<style>
+    #gridDatosReserva .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Reservas";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+                              .Name("gridDatosReserva")
+                              .Columns(columns =>
+                              {
+                                  columns.Bound(c => c.Id).Visible(false);
+                                  columns.Bound(c => c.ClienteId).Visible(false);
+                                  columns.Bound(c => c.Cliente);
+                                  columns.Bound(c => c.PlanTuristicoId).Visible(false);
+                                  columns.Bound(c => c.Plan);
+                                  columns.Bound(c => c.ConvenioId).Visible(false);
+                                  columns.Bound(c => c.Convenio);
+                                  columns.Bound(c => c.Fecha);
+                                  columns.Bound(c => c.UsuarioId).Visible(false);
+                                  columns.Bound(c => c.Usuario);
+                                  columns.Bound(c => c.ValorBruto);
+                                  columns.Bound(c => c.ValorDescuento);
+                                  columns.Bound(c => c.ValorTotal);
+                                  columns.Bound(c => c.CreadoPor).Visible(false);
+                                  columns.Bound(c => c.FechaCreacion).Visible(false);
+                                  columns.Bound(c => c.ModificadoPor).Visible(false);
+                                  columns.Bound(c => c.FechaModificacion).Visible(false);
+                                  columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                    .ClientTemplate(
+                                      @"<div style='display: flex; justify-content: space-between;'>" +
+                                            @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetReservaNewWindow("" " + Url.Action("_ReservaToPrint", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-print' aria-hidden='true'></i></button>" +
+                                        @"<div style='display: flex; justify-content: space-between;'>" +
+                                            @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Details", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+
+                                            @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Edit", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                            @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetReserva("" " + Url.Action("_Delete", "Reserva", new { id = "#=Id#" }) + @" "")'" +
+                                            @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                        @"</div>"
+                                  );
+                              })
+
+                              .Sortable()
+                              .Pageable(pageable => pageable
+                                  .Refresh(true)
+                                  .PageSizes(true)
+                                  .ButtonCount(5))
+                              .ClientDetailTemplateId("templateIntegrantes")
+                              .DataSource(dataSource => dataSource
+                                  .Ajax()
+                                  .PageSize(15)
+                                  .ServerOperation(false)
+                                  .Read(read => read.Action("Index_Read", "Reserva"))
+                              )
+                              .ToolBar(tb =>
+                              {
+                                  tb.Template(
+                @<text>
+                    <button class='btn btn-success' id='btnNuevoReserva' type='button' onclick="ajaxGetReserva('@Url.Action("_Create", "Reserva")')"><i class='fa fa-plus' aria-hidden='true'></i>Adicionar</button>
+                    <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+                </text>);
+                              })
+                .Excel(excel => excel.FileName("Reservas.xlsx").AllPages(true))
+                .Filterable(ftb => ftb
+                .Extra(false)
+                .Operators(operators => operators
+                    .ForString(str => str
+                    .Clear()
+                    .StartsWith("Comienza con...")
+                    .Contains("Contiene...")
+                    )
+                    .ForEnums(enu => enu
+                    .Clear()
+                    .IsEqualTo("Es igual a...")
+                    )
+                )
+                )
+)
+                    <script id="templateIntegrantes" type="text/kendo-tmpl">
+                        @(Html.Kendo().Grid<ReservaDetalleViewModel>()
+                                                                    .Name("GridReservaDetalle_#=Id#")
+                                                                    .HtmlAttributes(new { @class = "GridReservaDetalle" })
+
+                                                                    .Events(e =>
+                                                                    {
+                                                                    })
+                                                                    .Columns(columns =>
+                                                                    {
+                                                                        columns.Bound(c => c.Id);
+                                                                        columns.Bound(c => c.Item);
+                                                                        columns.Bound(c => c.Cantidad);
+                                                                        columns.Bound(c => c.Descripcion);
+                                                                        columns.Bound(c => c.ValorUnitario);
+                                                                        columns.Bound(c => c.ValortotalBruto);
+                                                                        columns.Bound(c => c.PorcentajeDescuento);
+                                                                        columns.Bound(c => c.ValorDescuento);
+                                                                        columns.Bound(c => c.ValorAntesImpuesto);
+                                                                        columns.Bound(c => c.PorcentajeImpuesto);
+                                                                        columns.Bound(c => c.ValorImpuesto);
+                                                                        columns.Bound(c => c.ValorTotal);
+                                                                    })
+                                                                    .Pageable(pageable => pageable
+                                                                        .Refresh(true)
+                                                                        .PageSizes(false)
+                                                                        .ButtonCount(5))
+                                                                    .DataSource(dataSource => dataSource
+                                                                        .Ajax()
+                                                                        .PageSize(10)
+                                                                        .Sort(sort => sort.Add("Item").Ascending())
+                                                                        .Read(read => read.Action("Read_ReservaDetalle", "Reserva", new { ReservaId = "#=Id#" }))
+                                                                        .ServerOperation(false)
+                                                                    )
+
+                                                                .ToolBar(toolbar =>
+                                                                {
+                                                                    toolbar.Template(
+                                                                @<text>
+                                                                    <button class='btn btn-info' id='btnNuevoReserva' type='button' onclick="ajaxGetReserva('@Url.Action("_AgregarDetalleGrid", "Reserva")/#=Id#')"><i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalle</button>
+                                                                    <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+                                                                </text>
+                                                                       );
+                                                                        })
+                                        .ToClientTemplate())
+                        <br />
+                        @(Html.Kendo().Grid<ReservaIntegranteViewModel>()
+                                                                    .Name("GridReservaIntegrantes_#=Id#")
+                                                                    .HtmlAttributes(new { @class = "GridReservaIntegrante" })
+
+                                                                    .Events(e =>
+                                                                    {
+                                                                    })
+                                                                    .Columns(columns =>
+                                                                    {
+                                                                        columns.Bound(c => c.Id);
+                                                                        columns.Bound(c => c.ClienteId);
+                                                                        columns.Bound(c => c.NumeroIdentificacion);
+                                                                        columns.Bound(c => c.NombreORazonSocial);
+                                                                        columns.Bound(c => c.FechaNacimiento);
+                                                                        columns.Bound(c => c.Edad);
+                                                                    })
+                                                                    .Pageable(pageable => pageable
+                                                                        .Refresh(true)
+                                                                        .PageSizes(false)
+                                                                        .ButtonCount(5))
+                                                                    .DataSource(dataSource => dataSource
+                                                                        .Ajax()
+                                                                        .PageSize(10)
+                                                                        .Sort(sort => sort.Add("Cliente").Ascending())
+                                                                        .Read(read => read.Action("Read_ReservaIntegrante", "Reserva", new { ReservaId = "#=Id#" }))
+                                                                        .ServerOperation(false)
+                                                                    )
+
+                                                                .ToolBar(toolbar =>
+                                                                {
+                                                                    toolbar.Template(
+                                                        @<text>
+                                                            <button class='btn btn-info' id='btnNuevoReserva' type='button' onclick="ajaxGetReserva('@Url.Action("_AgregarItems", "Reserva")/#=Id#')"><i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Integrantes de la Reserva</button>
+                                                            <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+                                                        </text>
+                                       );
+                                                                })
+                                .ToClientTemplate())
+
+                    </script>
+@section scripts {
+    <script src="~/Scripts/Reserva.js"></script>
+}

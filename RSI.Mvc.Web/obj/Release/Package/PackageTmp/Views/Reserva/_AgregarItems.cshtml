@@ -1,0 +1,89 @@
+﻿@model RSI.Mvc.Web.ViewModel.ReservaViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+<script>
+    var jsonDetailReserv = {
+        closeDetail: function () {
+            ajaxPostReservaDetalle('@Url.Action("_AgregarItems", "Reserva")', 'editarReservaDetalleForm');
+            $('#GridReservaDetalle_@Model.Id').data('kendoGrid').dataSource.read();
+            //document.getElementById("modalRSI").style.display = "none";
+            //document.getElementsByClassName("modal-backdrop").style.display = "none";
+        }
+    };
+</script>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header bg-info">
+            <h4 class="modal-title" style="display: inline-block;">Editar Detalle de la reserva</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        @using (Html.BeginForm("_Edit", "ReservaDetalle", FormMethod.Post, new { id = "editarReservaDetalleForm" }))
+        {
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Plan, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Plan, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Plan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="optional">Disponibles</label>
+                            <br />
+                            @(Html.Kendo().ListBox()
+                                        .HtmlAttributes(new { style = "width: 100%; height: 400px;" })
+                                        .Name("optional")
+                                        .Toolbar(toolbar =>
+                                        {
+                                            toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right)
+                                                .Tools(tools => tools
+                                                .MoveUp()
+                                                .MoveDown()
+                                                .TransferTo()
+                                                .TransferFrom()
+                                                .TransferAllTo()
+                                                .TransferAllFrom()
+                                                .Remove()
+                                            );
+                                        })
+                                        .ConnectWith("Seleccionados")
+                                        .BindTo(ViewBag.Disponibles)
+                            )
+                        </div>
+                        <div class="col-md-5">
+                            <label for="Seleccionados">Seleccionados</label>
+                            <br />
+                            @(Html.Kendo().ListBox()
+                                        .HtmlAttributes(new { style = "width: 100%; height: 400px;" })
+                                        .Name("Seleccionados")
+                                        .BindTo(ViewBag.Seleccionados)
+                                        .Selectable(ListBoxSelectable.Multiple)
+                            )
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background: white; margin: 0; padding: 0;">
+                <br />
+                <button type="button" onclick="jsonDetailReserv.closeDetail();" class="btn btn-success" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-check' aria-hidden='true'></i> Guardar</button>
+                <button type="button" class="btn btn-default" style='margin: 10px 0 20px 0' data-dismiss="modal"><i class='fa fa-close' aria-hidden='true'></i> Cancelar</button>
+                <br />
+            </div>
+        }
+
+    </div>
+</div>
+

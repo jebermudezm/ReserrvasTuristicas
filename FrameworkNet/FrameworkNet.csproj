@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{42900254-7DE5-47C7-80F5-DA96E0F1D2E8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>FrameworkNet</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>FrameworkNet</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccesoDatos\CriterioBusqueda.cs" />
+    <Compile Include="AccesoDatos\CriterioBusquedaExcepcion.cs" />
+    <Compile Include="AccesoDatos\ICriterioBusqueda.cs" />
+    <Compile Include="AccesoDatos\OperadorCriterio.cs" />
+    <Compile Include="AdministracionConexionesImpl\AdministradorConexiones.cs" />
+    <Compile Include="AdministracionConexionesImpl\AdministradorConexionesFactory.cs" />
+    <Compile Include="AdministracionConexiones\AdministradorConexionesExcepcion.cs" />
+    <Compile Include="AdministracionConexiones\IAdministradorConexiones.cs" />
+    <Compile Include="AdministracionConexiones\IAdministradorConexionesFactory.cs" />
+    <Compile Include="AdministracionConexiones\IAmbiente.cs" />
+    <Compile Include="AdministracionConexiones\IAmbienteFactory.cs" />
+    <Compile Include="AdministracionConexiones\IEncriptador.cs" />
+    <Compile Include="AdministracionConexiones\IEncriptadorFactory.cs" />
+    <Compile Include="AdministracionConexiones\IRepositorio.cs" />
+    <Compile Include="AdministracionConexiones\IRepositorioFactory.cs" />
+    <Compile Include="Ambientes\Ambiente.cs" />
+    <Compile Include="Ambientes\AmbienteFactory.cs" />
+    <Compile Include="RsiImpl\RepositorioRsi.cs" />
+    <Compile Include="RsiImpl\RepositorioRsiExcepcion.cs" />
+    <Compile Include="RsiImpl\RepositorioRsiFactory.cs" />
+    <Compile Include="AccesoDatos\Ad_Global.cs" />
+    <Compile Include="Rsi\Aplicacion.cs" />
+    <Compile Include="Rsi\Grupo.cs" />
+    <Compile Include="Rsi\IRepositorioRsi.cs" />
+    <Compile Include="Rsi\IRepositorioRsiFactory.cs" />
+    <Compile Include="Rsi\IValidadorRsi.cs" />
+    <Compile Include="Rsi\IValidadorRsiFactory.cs" />
+    <Compile Include="Rsi\Responsabilidad.cs" />
+    <Compile Include="Rsi\Sitio.cs" />
+    <Compile Include="Rsi\Usuario.cs" />
+    <Compile Include="Encriptadores\Encriptador.cs" />
+    <Compile Include="Encriptadores\EncriptadorExcepcion.cs" />
+    <Compile Include="Encriptadores\EncriptadorFactory.cs" />
+    <Compile Include="Repositorios\Repositorio.cs" />
+    <Compile Include="Repositorios\RepositorioFactory.cs" />
+    <Compile Include="ValidadorRsiImpl\ValidadorRsi.cs" />
+    <Compile Include="ValidadorRsiImpl\ValidadorRsiExcepcion.cs" />
+    <Compile Include="ValidadorRsiImpl\ValidadorRsiFactory.cs" />
+    <Compile Include="FrameworkNet\FrameworkNetExcepcion.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

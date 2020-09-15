@@ -1,0 +1,168 @@
+﻿@using RSI.Mvc.Web.ViewModel
+@model IEnumerable<PlanViewModel>
+
+
+<style>
+    #gridDatosPlan .k-grid-header .k-header {
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .k-list-scroller {
+        overflow-y: scroll;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+    TempData["ModuleName"] = "Administración de Planes";
+}
+
+<br />
+
+@*@Html.AntiForgeryToken()*@
+
+@(Html.Kendo().Grid(Model)
+                          .Name("gridDatosPlan")
+                          .Columns(columns =>
+                          {
+                              columns.Bound(c => c.Id).Visible(true);
+                              columns.Bound(c => c.Codigo).Visible(true);
+                              columns.Bound(c => c.Descripcion).Visible(true);
+                              columns.Bound(c => c.Destino).Visible(true);
+                              columns.Bound(c => c.Hotel).Visible(true);
+                              columns.Bound(c => c.Observacion);
+                              columns.Bound(c => c.CreadoPor).Visible(false);
+                              columns.Bound(c => c.FechaCreacion).Visible(false);
+                              columns.Bound(c => c.ModificadoPor).Visible(false);
+                              columns.Bound(c => c.FechaModificacion).Visible(false);
+                              columns.Bound(c => c.Id).Title("Opciones").Width(140).Filterable(false)
+                                .ClientTemplate(
+                                    @"<div style='display: flex; justify-content: space-between;'>" +
+                                        @"<button class='btn btn-circle btn-info' role='button' onClick='ajaxGetPlan("" " + Url.Action("_Details", "Plan", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Ver'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+
+                                        @"<button class='btn btn-circle btn-warning' role='button' onClick='ajaxGetPlan("" " + Url.Action("_Edit", "Plan", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Editar'><i class='fa fa-edit' aria-hidden='true'></i></button>" +
+
+                                        @"<button class='btn btn-circle btn-danger' role='button' onClick='ajaxGetPlan("" " + Url.Action("_Delete", "Plan", new { id = "#=Id#" }) + @" "")'" +
+                                        @"    data-toggle='tooltip' data-placement='top' title='Eliminar'><i class='fa fa-close' aria-hidden='true'></i></button>" +
+                                    @"</div>"
+                              );
+                          })
+                          .Sortable()
+                          .Pageable(pageable => pageable
+                              .Refresh(true)
+                              .PageSizes(true)
+                              .ButtonCount(5))
+                          .ClientDetailTemplateId("templateIncluye")
+                          .DataSource(dataSource => dataSource
+                              .Ajax()
+                              .PageSize(15)
+                              .ServerOperation(false)
+                              .Read(read => read.Action("Index_Read", "Plan"))
+                          )
+                          .ToolBar(tb =>
+                          {
+                          tb.Template(
+    @<text>
+        <button class='btn btn-success' id='btnNuevoPlan' type='button' onclick="ajaxGetPlan('@Url.Action("_Create", "Plan")')"><i class='fa fa-plus' aria-hidden='true'></i>Adicionar</button>
+        <button class="k-button k-button-icontext k-grid-excel" style="background: RGB(33, 115, 70); padding: 5px 15px; color: white;"><i class='fa fa-file-excel-o' aria-hidden='true'></i> Exportar a Excel</button>
+    </text>);
+    })
+            .Excel(excel => excel.FileName("Planes.xlsx").AllPages(true))
+            .Filterable(ftb => ftb
+            .Extra(false)
+            .Operators(operators => operators
+                .ForString(str => str
+                .Clear()
+                .StartsWith("Comienza con...")
+                .Contains("Contiene...")
+                )
+                .ForEnums(enu => enu
+                .Clear()
+                .IsEqualTo("Es igual a...")
+                )
+            )
+            )
+)
+        <script id="templateIncluye" type="text/kendo-tmpl">
+            @(Html.Kendo().Grid<IncluyeViewModel>()
+                        .Name("GridIncluds_#=Id#")
+                        .HtmlAttributes(new { @class = "GridIncluds" })
+
+                        .Events(e =>
+                        {
+                        })
+                        .Columns(columns =>
+                        {
+                            columns.Bound(c => c.Id);
+                            columns.Bound(c => c.Codigo);
+                            columns.Bound(c => c.Descripcion);
+                        })
+                        .Pageable(pageable => pageable
+                            .Refresh(true)
+                            .PageSizes(false)
+                            .ButtonCount(5))
+                        .ClientDetailTemplateId("templateDetalleIncluye")
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(10)
+                            .Sort(sort => sort.Add("Codigo").Ascending())
+                            .Read(read => read.Action("Read_Includes", "Plan", new { planId = "#=Id#"}))
+                            .ServerOperation(false)
+                        )
+
+                    .ToolBar(toolbar =>
+                    {
+                    toolbar.Template(
+                        @"<button class='btn btn-success' id='btnNuevoPlan'" +
+                                @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                @"onClick='ajaxGetPlan(""" + Url.Action("_CreateIncludeGrid", "Plan") + @"?planId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Detalles del plan'>" +
+                            @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalles del plan" +
+                        @"</button>"
+                        );
+                    })
+                    .ToClientTemplate())
+        </script>
+        <script id="templateDetalleIncluye" type="text/kendo-tmpl">
+            @(Html.Kendo().Grid<DetalleIncluyeViewModel>()
+                        .Name("GridDetalleIncluye_#=Id#")
+                        .HtmlAttributes(new { @class = "GridDetalleIncluye" })
+
+                        .Events(e =>
+                        {
+                        })
+                        .Columns(col =>
+                        {
+                            col.Bound(c => c.Id);
+                            col.Bound(c => c.Codigo);
+                            col.Bound(c => c.Descripcion);
+                        })
+                        .Pageable(pageable => pageable
+                            .Refresh(true)
+                            .PageSizes(false)
+                            .ButtonCount(5))
+                        .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .PageSize(10)
+                            .Sort(sort => sort.Add("Descripcion").Ascending())
+                            .Read(read => read.Action("Read_DetalleIncluye", "Plan", new { incluyeId = "#=Id#" }))
+                            .ServerOperation(false)
+                        )
+
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(
+                        @"<button class='btn btn-success' id='btnAddDetalleIncluye'" +
+                                @"style='float: left; margin: 10px 10px 10px 10px;' type='button'" +
+                                @"onClick='ajaxGetPlan(""" + Url.Action("_CreateDetalleIncludeGrid", "Plan") + @"?incluyeId=#=Id#"")' data-toggle='tooltip' data-placement='top' title='Agregar/Editar Detalle Item'>" +
+                            @" <i class='fa fa-plus' aria-hidden='true'></i> Agregar/Editar Detalle Item" +
+                        @"</button>"
+                        );
+                    })
+                    .ToClientTemplate())
+        </script>
+@section scripts {
+    <script src="~/Scripts/Plan.js"></script>
+}

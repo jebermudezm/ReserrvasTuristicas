@@ -1,0 +1,46 @@
+﻿@charset "UTF-8";
+@media (max-width: 1200px) {
+    .k-edit-form-container {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 969px) {
+
+
+    .k-edit-form-container {
+        width: 100% !important;
+    }
+}
+/** END 969 **/
+@media (max-width: 768px) {
+
+    .k-edit-form-container {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 568px) {
+
+    .k-edit-form-container {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .k-edit-form-container {
+        width: 100% !important;
+    }
+}
+
+.container-edit {
+    padding-right: 20px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.form-group-edit {
+    width: 94%;
+}

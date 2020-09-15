@@ -1,0 +1,48 @@
+﻿@model RSI.Mvc.Web.Controllers.InfoTemplate
+<div id="NavbarHeader" class="navbar-header">
+    <div class="navbar-minimize-mobile left">
+        <i class="fa fa-bars"></i>
+    </div>
+    <a class="navbar-brand" href="@Url.Action("Index", "Home")" data-toggle="tooltip" data-placement="bottom" title="Ambiente de @Model.EnvironmentName">
+        <img class="logo" alt="brand logo" src="~/img/Perfil.jpg">
+    </a>
+</div>
+<div id="NavbarHeaderRight" class="header-right">
+    <div class="navbar navbar-toolbar">
+        <ul id="NavbarToolbarLeft" class="nav navbar-nav navbar-left">
+            <li class="navbar-minimize">
+                <a id="MinimizeSidebarButton" title="Minimize sidebar" href="javascript:void(0);">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </li>
+            <li class="navbar-search">
+                <a tabindex="0" class="Bold" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Descripción" data-content="@Model.ApplicationDescription">
+                    @Model.ApplicationName
+                </a>
+            </li>
+            <li>
+                <span id="HeaderNameModule">@TempData["ModuleName"]</span>
+            </li>
+        </ul>
+        <ul id="NavbarToolbarRight" class="nav navbar-nav navbar-right">
+            <li id="NavbarSearchBox" class="navbar-search"></li>
+            <li id="NavbarButtonNotification" class="dropdown navbar-notification"></li>
+            <li class="dropdown navbar-profile">
+                <a class="myAvatar dropdown-toggle" href="#" data-toggle="dropdown">
+                    <span class="meta">
+                        <span class="avatar"><img class="img-circle" src="~/img/Logo.jpg"></span>
+                        <span class="text hidden-xs hidden-sm text-muted">@Model.UserLName</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <ul id="DropdownMenuProfile" class="dropdown-menu animated flipInX">
+                    <li class="dropdown-header">Cuenta de Usuario</li>
+                    <li><a href="@Url.Action("profiles", "templates")"><i class="fa fa-user"></i>Perfil</a></li>
+                    <li class="dropdown-header">Sistema</li>
+                    <li><a href="@Url.Action("help", "home")"><i class="fa fa-info"></i>Ayuda</a></li>
+                    <li><a href="@Url.Action("handbook", "home")"><i class="fa fa-file-pdf-o"></i>Manuales</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
