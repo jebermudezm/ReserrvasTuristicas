@@ -1,0 +1,13 @@
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\ListaTablasColumnasMigrar.xml
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\Migration.deps.json
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\Migration.runtimeconfig.json
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\Migration.runtimeconfig.dev.json
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\Migration.dll
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\Migration.pdb
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.csproj.CoreCompileInputs.cache
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.AssemblyInfoInputs.cache
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.AssemblyInfo.cs
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.dll
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.pdb
+D:\DirTrab\AES\Migracion\Migration\obj\Debug\netcoreapp2.1\Migration.csprojAssemblyReference.cache
+D:\DirTrab\AES\Migracion\Migration\bin\Debug\netcoreapp2.1\appsettings.json
